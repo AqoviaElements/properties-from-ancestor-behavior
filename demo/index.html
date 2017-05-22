@@ -1,0 +1,36 @@
+﻿<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+
+    <title>properties-from-ancestor-behavior demo</title>
+
+    <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+
+    <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
+    <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
+    <link rel="import" href="example-ancestor-component.html">
+    <link rel="import" href="example-descendant-component.html">
+
+    <style is="custom-style" include="demo-pages-shared-styles">
+    </style>
+  </head>
+  <body>
+    <div class="vertical-section-container centered">
+      <h3>Basic properties-from-ancestor-behavior demo</h3>
+      <demo-snippet>
+        <template>
+            <example-ancestor-component my-prop1="Initial Value" my-prop2="Initial Value">
+                <div>
+                    <example-descendant-component></example-descendant-component>
+                </div>
+                <div>
+                    <example-descendant-component></example-descendant-component>
+                </div>
+            </example-ancestor-component>
+        </template>
+      </demo-snippet>
+    </div>
+  </body>
+</html>

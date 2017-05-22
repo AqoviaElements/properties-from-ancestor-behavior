@@ -1,0 +1,169 @@
+﻿<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+
+    <title>properties-from-ancestor-behavior test</title>
+
+    <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+    <script src="../../web-component-tester/browser.js"></script>
+
+    <link rel="import" href="../../polymer/polymer.html" />
+    <link rel="import" href="../test_components/test-ancestor-component-as-container.html">
+    <link rel="import" href="../test_components/test-ancestor-component-with-own-template.html">
+    <link rel="import" href="../test_components/test-descendant-component.html">
+    <link rel="import" href="../test_components/test-descendant-component-with-default.html">
+  </head>
+<body>
+    <test-fixture id="plain-html-direct-value">
+        <template>
+            <div>
+                <p>Some content.</p>
+                <test-descendant-component my-prop1="directValue"></test-descendant-component>
+            </div>
+        </template>
+    </test-fixture>
+    <script>
+        suite('plain-html-direct-value', function () {
+            var ancestor;
+            var descendant;
+            setup(function () {
+                ancestor = fixture('plain-html-direct-value');
+                descendant = ancestor.querySelector('test-descendant-component');
+            });
+
+            test('when attribute specified on descendant itself, it takes precedence', function () {
+                expect(descendant.myProp1).to.be.equal("directValue");
+            });
+        });
+    </script>
+
+    <test-fixture id="plain-html-default-value">
+        <template>
+            <div>
+                <p>Some content.</p>
+                <test-descendant-component-with-default></test-descendant-component-with-default>
+            </div>
+        </template>
+    </test-fixture>
+    <script>
+        suite('plain-html-default-value', function () {
+            var ancestor;
+            var descendant;
+            setup(function () {
+                ancestor = fixture('plain-html-default-value');
+                descendant = ancestor.querySelector('test-descendant-component-with-default');
+            });
+
+            test('when no ancestor found and "defaultValue:" specified, its value is set', function () {
+                expect(descendant.myProp1).to.be.equal("defaultValue");
+            });
+        });
+    </script>
+
+    <test-fixture id="plain-html-element-ancestor">
+        <template>
+            <div my-prop1="initialValue">
+                <div>
+                    <p>Some content.</p>
+                    <test-descendant-component></test-descendant-component>
+                </div>
+            </div>
+        </template>
+    </test-fixture>
+    <script>
+        suite('plain-html-element-ancestor', function () {
+            var ancestor;
+            var descendant;
+            setup(function () {
+                ancestor = fixture('plain-html-element-ancestor');
+                descendant = ancestor.querySelector('test-descendant-component');
+            });
+
+            test('descendant receives initial value of plain html element ancestor', function () {
+                expect(descendant.myProp1).to.be.equal("initialValue");
+            });
+        });
+    </script>
+
+    <test-fixture id="web-component-container-ancestor">
+        <template>
+            <test-ancestor-component-as-container my-prop1="initialValue">
+                <div>
+                    <p>Some content.</p>
+                    <test-descendant-component></test-descendant-component>
+                </div>
+            </test-ancestor-component-as-container>
+        </template>
+    </test-fixture>
+
+    <script>
+        suite('web-component-container-ancestor', function () {
+            var ancestor;
+            var descendant;
+            setup(function () {
+                ancestor = fixture('web-component-container-ancestor');
+                descendant = ancestor.querySelector('test-descendant-component');
+            });
+
+            test('descendant receives initial value of web-component ancestor', function () {
+                expect(descendant.myProp1).to.be.equal("initialValue");
+            });
+
+            test('descendant receives changed value of web-component ancestor', function () {
+                ancestor.myProp1 = 'changedValue';
+                expect(descendant.myProp1).to.be.equal("changedValue");
+            });
+        });
+    </script>
+
+    <test-fixture id="web-component-with-own-template-ancestor">
+        <template>
+            <test-ancestor-component-with-own-template></test-ancestor-component-with-own-template>
+        </template>
+    </test-fixture>
+    <script>
+        suite('web-component-with-own-template-ancestor', function () {
+            var ancestor;
+            var descendant;
+            setup(function () {
+                ancestor = fixture('web-component-with-own-template-ancestor');
+                descendant = ancestor.$$('test-descendant-component');
+            });
+
+            test('descendant receives initial value of plain html element ancestor', function () {
+                expect(descendant.myProp1).to.be.equal("initialValue");
+            });
+        });
+    </script>
+
+
+    <test-fixture id="plain-html-element-ancestor-inside-web-component-container">
+        <template>
+            <test-ancestor-component-as-container>
+                <div my-prop1="initialValue">
+                    <div>
+                        <p>Some content.</p>
+                        <test-descendant-component></test-descendant-component>
+                    </div>
+                </div>
+            </test-ancestor-component-as-container>
+        </template>
+    </test-fixture>
+    <script>
+        suite('plain-html-element-inside-web-component-container-ancestor', function () {
+            var ancestor;
+            var descendant;
+            setup(function () {
+                ancestor = fixture('plain-html-element-ancestor-inside-web-component-container');
+                descendant = ancestor.querySelector('test-descendant-component');
+            });
+
+            test('descendant receives initial value of plain html element ancestor', function () {
+                expect(descendant.myProp1).to.be.equal("initialValue");
+            });
+        });
+    </script>
+</body>
+</html>

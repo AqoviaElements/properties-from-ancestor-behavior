@@ -1,0 +1,109 @@
+<script>
+    /**
+
+## PropertiesFromAncestorBehavior
+
+Behavior for a web component to take a property value from the closest ancestor that has it. Supports change events.
+
+Such a tool can be useful for ubiquitous properties (think language of the UI, currency, etc.) which would otherwise pollute attributes of every component with same boilerplate expression, or force usage of a global variable (usually without binding to changes).
+
+### Usage:
+
+Technically, it's a behavior factory function. To have a behavior instance created, you call the `PropertiesFromAncestorBehavior()`.
+```JavaScript
+Polymer({
+    is: 'example-descendant-component',
+    behaviors: [
+        PropertiesFromAncestorBehavior({
+            myProp1: {
+                    /// If no ancestor with value is found, `defaultValue` will to be used
+                    ///   (don't use the polymer's 'value:' for this, because it would unnecessarily set this value that during initialization, while it might be different from that of the ancestor
+                defaultValue: 123,
+                    // All other Polymer settings get passed to declaration of this property on the element:
+                type: String,
+                notify: true,
+            },
+        }),
+    ]
+})
+```
+
+the above declaration will make the properties available in `<example-descendant-component>`s template:
+```HTML
+<template>
+    myProp1 value is {{myProp1}}
+    <br/>
+    myProp2 value is {{myProp2}}
+</template>
+```
+
+while their values will come from the closest ancestor that has the corresponding dash-case attribute.
+```HTML
+<example-container-component my-prop1="some value" my-prop2="some other value"><!-- Container can also be a simple HTML <div>. As long as it has the attributes. These attributes are a requirement to discover the ancestor. If the element also has matching properties, they instead will be taken and their changes listened to. -->
+  <example-descendant-component></example-descendant-component>
+</example-container-component>
+```
+
+@polymerBehavior
+@demo demo/index.html
+*/
+    PropertiesFromAncestorBehavior = function (propsDefObject) {
+        return Object.keys(propsDefObject).map(function (propName) {
+                var propDef = propsDefObject[propName];
+
+                var ancestorWithAttribute = undefined;
+
+                var dashedName = fromCamelCaseSymbolToDash(propName);
+                var changeEventName = dashedName + '-changed';
+                var changeEventListener;
+
+                var behaviorDefinition = {
+                    properties: {},
+                    attached: function () {
+
+                        ancestorWithAttribute = polymerClosestWithAttribute(this, dashedName);
+
+                        this[propName] =
+                            !ancestorWithAttribute ?
+                                propDef.defaultValue
+                                :
+                                propName in ancestorWithAttribute ?
+                                    ancestorWithAttribute[propName]
+                                    :
+                                    ancestorWithAttribute.getAttribute(dashedName);
+
+                        if (ancestorWithAttribute) {
+                            changeEventListener = function changeEventListener() {
+                                this[propName] = ancestorWithAttribute[propName];
+                            }.bind(this);
+                            ancestorWithAttribute.addEventListener(changeEventName, changeEventListener);
+                        }
+                    },
+                    detached: function () {
+                        if (ancestorWithAttribute)
+                            ancestorWithAttribute.removeEventListener(changeEventName, changeEventListener);
+                    },
+                };
+
+
+                behaviorDefinition.properties[propName] = propDef;
+
+                return behaviorDefinition;
+            });
+
+        /// An equivalent of Element.closest('[attributeName]') for Polymer (uses `Element.domHost` to support children that are only being built, whose ancestors haven't been attached themselves yet).
+        function polymerClosestWithAttribute(e, attributeName) {
+            if (e.getAttribute(attributeName))
+                return e;
+            else {
+                var parent = e.parentElement || e.domHost;
+                return parent ? polymerClosestWithAttribute(parent, attributeName) : null;
+            }
+        }
+
+        /// Improved (no '-' for 1st char if uppercase) version of https://jamesroberts.name/blog/2010/02/22/string-functions-for-javascript-trim-to-camel-case-to-dashed-and-to-underscore/
+        function fromCamelCaseSymbolToDash(string) {
+            return string.replace(/[A-Z]/g, function (match, offset) { return (offset !== 0 ? "-" : "") + match.toLowerCase(); });
+        }
+    };
+</script>
