@@ -1,0 +1,42 @@
+﻿<link rel="import" href="../../polymer/polymer.html" />
+<link rel="import" href="../properties-from-ancestor-behavior.html"/>
+<dom-module id="test-descendant-component-with-custom-prop-declaration">
+    <template>
+        <h1>Descendant component</h1>
+        myProp1 value is {{myProp1}}
+    </template>
+</dom-module>
+<script>
+    Polymer({
+        is: "test-descendant-component-with-custom-prop-declaration",
+        behaviors: [
+            PropertiesFromAncestorBehavior({
+                myProp1: {
+                    defaultValue: 'defaultValue',
+                    observer: '_myProp1ChangedInBehavior',
+                },
+            })
+        ],
+        properties: {
+            myProp1: {
+                observer: '_myProp1Changed',
+                notify: true,
+                reflectToAttribute: true,
+            },
+            _myProp1ChangedObserverInBehaviorFired: Boolean,
+            _myProp1ChangedObserverFired: Boolean,
+            _myProp1ChangedEventFired: Boolean,
+        },
+        created: function () {
+            this.addEventListener('my-prop1-changed', function () {
+                    this._myProp1ChangedEventFired = true;
+                }.bind(this))
+        },
+        _myProp1Changed: function () {
+            this._myProp1ChangedObserverFired = true;
+        },
+        _myProp1ChangedInBehavior: function () {
+            this._myProp1ChangedObserverInBehaviorFired = true;
+        },
+    });
+</script>

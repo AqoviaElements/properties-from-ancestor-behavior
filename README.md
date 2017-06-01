@@ -46,16 +46,27 @@ Polymer({
     is: 'example-descendant-component',
     behaviors: [
         PropertiesFromAncestorBehavior({
+            // Just declaring a property here is enough to make it work.
             myProp1: {
-                    /// If no ancestor with value is found, `defaultValue` will to be used
-                    ///   (don't use the polymer's 'value:' for this, because it would unnecessarily set this value that during initialization, while it might be different from that of the ancestor
+                // Optionally, you can provide a default. If no ancestor with value is found, `defaultValue` will to be used:
                 defaultValue: 123,
-                    // All other Polymer settings get passed to declaration of this property on the element:
-                type: String,
+                // (don't use the polymer's 'value:' for this though, because it may cause double initialization - once with such value, once with the value from ancestor (if they're different). That's because we can only reach the ancestor on 'attached', which happens after defaults get applied.
+
+                // If you don't care about polylint, you can avoid repetition and just put here all other property settings. They get passed to declaration of this property on the element:
                 notify: true,
+                observer: '_myProp1Changed',
             },
         }),
-    ]
+    ],
+    properties: {
+            // But if you want to keep polylint happy, you need to list the property here too:
+            myProp1: {
+                // Custom settings still work:
+                notify: true,
+                observer: '_myProp1Changed',
+                // But you don't want to use 'value:' here but rather 'defaultValue:' above. See comment there for 'why'.
+            },
+    }
 })
 ```
 
