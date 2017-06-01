@@ -14,6 +14,7 @@
     <link rel="import" href="../test_components/test-ancestor-component-with-own-template.html">
     <link rel="import" href="../test_components/test-descendant-component.html">
     <link rel="import" href="../test_components/test-descendant-component-with-default.html">
+      <link rel="import" href="../test_components/test-descendant-component-with-custom-prop-declaration.html">
   </head>
 <body>
     <test-fixture id="plain-html-direct-value">
@@ -58,6 +59,39 @@
 
             test('when no ancestor found and "defaultValue:" specified, its value is set', function () {
                 expect(descendant.myProp1).to.be.equal("defaultValue");
+            });
+        });
+    </script>
+
+    <test-fixture id="plain-html-custom-prop-declaration">
+        <template>
+            <div my-prop1="someValue">
+                <p>Some content.</p>
+                <test-descendant-component-with-custom-prop-declaration></test-descendant-component-with-custom-prop-declaration>
+            </div>
+        </template>
+    </test-fixture>
+    <script>
+        suite('plain-html-custom-prop-declaration', function () {
+            var ancestor;
+            var descendant;
+            setup(function () {
+                ancestor = fixture('plain-html-custom-prop-declaration');
+                descendant = ancestor.querySelector('test-descendant-component-with-custom-prop-declaration');
+                descendant.myProp1 = 'newValue'
+            });
+
+            test('when property declaration has `reflectToAttribute`, it works', function () {
+                expect(descendant.getAttribute('my-prop1')).to.be.equal("newValue");
+            });
+
+            test('when property declaration has "observer", it works', function () {
+                expect(descendant._myProp1ChangedObserverFired).to.be.equal(true);
+                expect(descendant._myProp1ChangedObserverInBehaviorFired).to.be.equal(true);
+            });
+
+            test('when property declaration has "notify", it works', function () {
+                expect(descendant._myProp1ChangedEventFired).to.be.equal(true);
             });
         });
     </script>
