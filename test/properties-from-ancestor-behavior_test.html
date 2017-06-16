@@ -78,7 +78,7 @@
             setup(function () {
                 ancestor = fixture('plain-html-custom-prop-declaration');
                 descendant = ancestor.querySelector('test-descendant-component-with-custom-prop-declaration');
-                descendant.myProp1 = 'newValue'
+                descendant.myProp1 = 'newValue';
             });
 
             test('when property declaration has `reflectToAttribute`, it works', function () {
