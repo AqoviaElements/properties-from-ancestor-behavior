@@ -62,17 +62,16 @@ while their values will come from the closest ancestor that has the correspondin
         return Object.keys(propsDefObject).map(function (propName) {
                 var propDef = propsDefObject[propName];
 
-                var ancestorWithAttribute = undefined;
-
                 var dashedName = fromCamelCaseSymbolToDash(propName);
                 var changeEventName = dashedName + '-changed';
-                var changeEventListener;
 
                 var behaviorDefinition = {
                     properties: {},
                     attached: function () {
-
-                        ancestorWithAttribute = polymerClosestWithAttribute(this, dashedName);
+                        var ancestorWithAttribute = polymerClosestWithAttribute(this, dashedName);
+                        this.__propertiesFromAncestorBehavior = {
+                            ancestorWithAttribute: ancestorWithAttribute,
+                        };
 
                         this[propName] =
                             !ancestorWithAttribute ?
@@ -84,15 +83,18 @@ while their values will come from the closest ancestor that has the correspondin
                                     ancestorWithAttribute.getAttribute(dashedName);
 
                         if (ancestorWithAttribute) {
-                            changeEventListener = function changeEventListener() {
-                                this[propName] = ancestorWithAttribute[propName];
-                            }.bind(this);
-                            ancestorWithAttribute.addEventListener(changeEventName, changeEventListener);
+                            ;
+                            ancestorWithAttribute.addEventListener(
+                                    changeEventName,
+                                    this.__propertiesFromAncestorBehavior.changeEventListener = function () {
+                                        this[propName] = ancestorWithAttribute[propName];
+                                    }.bind(this)
+                                );
                         }
                     },
                     detached: function () {
-                        if (ancestorWithAttribute)
-                            ancestorWithAttribute.removeEventListener(changeEventName, changeEventListener);
+                        if (this.__propertiesFromAncestorBehavior.ancestorWithAttribute)
+                            this.__propertiesFromAncestorBehavior.ancestorWithAttribute.removeEventListener(changeEventName, this.__propertiesFromAncestorBehavior.changeEventListener);
                     },
                 };
 
