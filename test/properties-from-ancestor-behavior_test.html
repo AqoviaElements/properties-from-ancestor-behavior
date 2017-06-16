@@ -78,7 +78,7 @@
             setup(function () {
                 ancestor = fixture('plain-html-custom-prop-declaration');
                 descendant = ancestor.querySelector('test-descendant-component-with-custom-prop-declaration');
-                descendant.myProp1 = 'newValue'
+                descendant.myProp1 = 'newValue';
             });
 
             test('when property declaration has `reflectToAttribute`, it works', function () {
@@ -196,6 +196,45 @@
 
             test('descendant receives initial value of plain html element ancestor', function () {
                 expect(descendant.myProp1).to.be.equal("initialValue");
+            });
+        });
+    </script>
+
+    <test-fixture id="two-instances-of-same-descendant-in-containers-with-different-properties">
+        <template>
+            <div>
+                <test-ancestor-component-as-container id="ancestor1" my-prop1="initialValue">
+                    <test-descendant-component></test-descendant-component>
+                </test-ancestor-component-as-container>
+                <test-ancestor-component-as-container id="ancestor2" my-prop1="initialValue">
+                    <test-descendant-component></test-descendant-component>
+                </test-ancestor-component-as-container>
+                <div my-prop1="valueForDescendant1">
+                </div>
+                <div my-prop1="valueForDescendant2">
+                </div>
+            </div>
+        </template>
+    </test-fixture>
+    <script>
+        suite('two-instances-of-same-descendant-in-containers-with-different-properties', function () {
+            var ancestor1;
+            var ancestor2;
+            var descendant1;
+            var descendant2;
+            setup(function () {
+                var template = fixture('two-instances-of-same-descendant-in-containers-with-different-properties');
+                ancestor1 = template.querySelector('#ancestor1');
+                ancestor2 = template.querySelector('#ancestor2');
+                descendant1 = ancestor1.querySelector('test-descendant-component');
+                descendant2 = ancestor2.querySelector('test-descendant-component');
+            });
+
+            test('each descendant receives value of its ancestor', function () {
+                ancestor1.myProp1 = 'valueForDescendant1';
+                expect(descendant1.myProp1).to.be.equal("valueForDescendant1");
+                ancestor2.myProp1 = 'valueForDescendant2';
+                expect(descendant2.myProp1).to.be.equal("valueForDescendant2");
             });
         });
     </script>
