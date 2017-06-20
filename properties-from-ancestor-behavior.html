@@ -80,7 +80,7 @@ while their values will come from the closest ancestor that has the correspondin
                                 propName in ancestorWithAttribute ?
                                     ancestorWithAttribute[propName]
                                     :
-                                    ancestorWithAttribute.getAttribute(dashedName);
+                                    this.deserialize(ancestorWithAttribute.getAttribute(dashedName), this.getPropertyInfo(propName).type);
 
                         if (ancestorWithAttribute) {
                             ;
@@ -106,7 +106,7 @@ while their values will come from the closest ancestor that has the correspondin
 
         /// An equivalent of Element.closest('[attributeName]') for Polymer (uses `Element.domHost` to support children that are only being built, whose ancestors haven't been attached themselves yet).
         function polymerClosestWithAttribute(e, attributeName) {
-            if (e.getAttribute(attributeName))
+            if (e.getAttribute(attributeName) !== null)
                 return e;
             else {
                 var parent = e.parentElement || e.domHost;
