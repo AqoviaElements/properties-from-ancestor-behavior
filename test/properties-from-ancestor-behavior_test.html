@@ -15,6 +15,7 @@
     <link rel="import" href="../test_components/test-descendant-component.html">
     <link rel="import" href="../test_components/test-descendant-component-with-default.html">
     <link rel="import" href="../test_components/test-descendant-component-with-custom-prop-declaration.html">
+    <link rel="import" href="../test_components/test-descendant-component-disablable-from-fieldset-starting-as-false.html">
   </head>
 <body>
     <test-fixture id="plain-html-direct-value">
@@ -141,6 +142,40 @@
 
             test('descendant receives initial boolean value of plain html element ancestor', function () {
                 expect(descendant.myBoolProp1).to.be.equal(true);
+            });
+        });
+    </script>
+
+    <test-fixture id="plain-html-element-ancestor-bool-prop-starting-as-false">
+        <template>
+            <fieldset>
+                <div>
+                    <test-descendant-component-disablable-from-fieldset-starting-as-false></test-descendant-component-disablable-from-fieldset-starting-as-false>
+                </div>
+            </fieldset>
+        </template>
+    </test-fixture>
+    <script>
+        suite('plain-html-element-ancestor-bool-prop-starting-as-false', function () {
+            let ancestor;
+            let descendant;
+            setup(function () {
+                ancestor = fixture('plain-html-element-ancestor-bool-prop-starting-as-false');
+                descendant = ancestor.querySelector('test-descendant-component-disablable-from-fieldset-starting-as-false');
+            });
+
+            test('descendant receives boolean value changed from false to true of plain html element ancestor', function (done) {
+                ancestor.disabled = true;
+
+                setTimeout(() => { // MutationObserver doesn't run in the same thread as the property change. Still, better than nothing.
+                    try {
+                        expect(descendant.disabled).to.be.equal(true);
+                        done();
+                    }
+                    catch (e) {
+                        done(e);
+                    }
+                }, 0);
             });
         });
     </script>
