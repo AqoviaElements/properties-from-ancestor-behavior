@@ -14,7 +14,7 @@
                 disabled: {
                     type: Boolean,
                     ancestorMatches: 'fieldset',
-                    observeAncestorAttribute: true, /*<fieldset> has a disabled property but changing it doesn't emit disabled-changed*/
+                    ancestorObservedItem: PropertiesFromAncestorBehavior.ObservedItem.ATTRIBUTE, /*<fieldset> has a disabled property but changing it doesn't emit disabled-changed*/
                 },
             })
         ],
