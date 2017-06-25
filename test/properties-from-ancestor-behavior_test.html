@@ -27,8 +27,8 @@
     </test-fixture>
     <script>
         suite('plain-html-direct-value', function () {
-            var ancestor;
-            var descendant;
+            let ancestor;
+            let descendant;
             setup(function () {
                 ancestor = fixture('plain-html-direct-value');
                 descendant = ancestor.querySelector('test-descendant-component');
@@ -50,8 +50,8 @@
     </test-fixture>
     <script>
         suite('plain-html-default-value', function () {
-            var ancestor;
-            var descendant;
+            let ancestor;
+            let descendant;
             setup(function () {
                 ancestor = fixture('plain-html-default-value');
                 descendant = ancestor.querySelector('test-descendant-component-with-default');
@@ -73,8 +73,8 @@
     </test-fixture>
     <script>
         suite('plain-html-custom-prop-declaration', function () {
-            var ancestor;
-            var descendant;
+            let ancestor;
+            let descendant;
             setup(function () {
                 ancestor = fixture('plain-html-custom-prop-declaration');
                 descendant = ancestor.querySelector('test-descendant-component-with-custom-prop-declaration');
@@ -108,8 +108,8 @@
     </test-fixture>
     <script>
         suite('plain-html-element-ancestor', function () {
-            var ancestor;
-            var descendant;
+            let ancestor;
+            let descendant;
             setup(function () {
                 ancestor = fixture('plain-html-element-ancestor');
                 descendant = ancestor.querySelector('test-descendant-component');
@@ -132,8 +132,8 @@
     </test-fixture>
     <script>
         suite('plain-html-element-ancestor-bool-prop', function () {
-            var ancestor;
-            var descendant;
+            let ancestor;
+            let descendant;
             setup(function () {
                 ancestor = fixture('plain-html-element-ancestor-bool-prop');
                 descendant = ancestor.querySelector('test-descendant-component');
@@ -156,8 +156,8 @@
     </test-fixture>
     <script>
         suite('plain-html-element-ancestor-number-prop', function () {
-            var ancestor;
-            var descendant;
+            let ancestor;
+            let descendant;
             setup(function () {
                 ancestor = fixture('plain-html-element-ancestor-number-prop');
                 descendant = ancestor.querySelector('test-descendant-component');
@@ -182,8 +182,8 @@
 
     <script>
         suite('web-component-container-ancestor', function () {
-            var ancestor;
-            var descendant;
+            let ancestor;
+            let descendant;
             setup(function () {
                 ancestor = fixture('web-component-container-ancestor');
                 descendant = ancestor.querySelector('test-descendant-component');
@@ -207,8 +207,8 @@
     </test-fixture>
     <script>
         suite('web-component-with-own-template-ancestor', function () {
-            var ancestor;
-            var descendant;
+            let ancestor;
+            let descendant;
             setup(function () {
                 ancestor = fixture('web-component-with-own-template-ancestor');
                 descendant = ancestor.$$('test-descendant-component');
@@ -235,8 +235,8 @@
     </test-fixture>
     <script>
         suite('plain-html-element-inside-web-component-container-ancestor', function () {
-            var ancestor;
-            var descendant;
+            let ancestor;
+            let descendant;
             setup(function () {
                 ancestor = fixture('plain-html-element-ancestor-inside-web-component-container');
                 descendant = ancestor.querySelector('test-descendant-component');
@@ -266,12 +266,12 @@
     </test-fixture>
     <script>
         suite('two-instances-of-same-descendant-in-containers-with-different-properties', function () {
-            var ancestor1;
-            var ancestor2;
-            var descendant1;
-            var descendant2;
+            let ancestor1;
+            let ancestor2;
+            let descendant1;
+            let descendant2;
             setup(function () {
-                var template = fixture('two-instances-of-same-descendant-in-containers-with-different-properties');
+                let template = fixture('two-instances-of-same-descendant-in-containers-with-different-properties');
                 ancestor1 = template.querySelector('#ancestor1');
                 ancestor2 = template.querySelector('#ancestor2');
                 descendant1 = ancestor1.querySelector('test-descendant-component');

@@ -60,15 +60,15 @@ while their values will come from the closest ancestor that has the correspondin
 */
     PropertiesFromAncestorBehavior = function (propsDefObject) {
         return Object.keys(propsDefObject).map(function (propName) {
-                var propDef = propsDefObject[propName];
+                let propDef = propsDefObject[propName];
 
-                var dashedName = fromCamelCaseSymbolToDash(propName);
-                var changeEventName = dashedName + '-changed';
+                let dashedName = fromCamelCaseSymbolToDash(propName);
+                let changeEventName = dashedName + '-changed';
 
-                var behaviorDefinition = {
+                let behaviorDefinition = {
                     properties: {},
                     attached: function () {
-                        var ancestorWithAttribute = polymerClosestWithAttribute(this, dashedName);
+                        let ancestorWithAttribute = polymerClosestWithAttribute(this, dashedName);
                         this.__propertiesFromAncestorBehavior = {
                             ancestorWithAttribute: ancestorWithAttribute,
                         };
@@ -108,7 +108,7 @@ while their values will come from the closest ancestor that has the correspondin
             if (e.getAttribute(attributeName) !== null)
                 return e;
             else {
-                var parent = e.parentElement || e.domHost;
+                let parent = e.parentElement || e.domHost;
                 return parent ? polymerClosestWithAttribute(parent, attributeName) : null;
             }
         }
