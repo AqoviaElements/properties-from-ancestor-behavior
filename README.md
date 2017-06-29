@@ -102,6 +102,8 @@ These parameters can be specified for each property:
     `PropertiesFromAncestorBehavior.ObservedItem.ATTRIBUTE`  
   If the ancestor doesn't emit `*-changed` events, you can use `ATTRIBUTE` to tell the behavior that it should use a <a href="https://developer.mozilla.org/en/docs/Web/API/MutationObserver" target="_blank">MutationObserver</a> to listen to the attribute.  
   Take note that in this case the handlers will not fire in the same thread as the change, so if you need to schedule some work after the handlers, you will need to use `setTimeout(..., 0)`.
+- **nameOnAncestor** (_Optional_)  
+  If the name of the property is different on the ancestor, specify it here (specify 'camelCase' name, but this will also change the expected dash-case attribute and '*-changed' event names).  
 
 
 # HOW-TO: Native-like support for `<fieldset disabled>`

@@ -71,6 +71,8 @@ These parameters can be specified for each property:
     `PropertiesFromAncestorBehavior.ObservedItem.ATTRIBUTE`  
   If the ancestor doesn't emit `*-changed` events, you can use `ATTRIBUTE` to tell the behavior that it should use a <a href="https://developer.mozilla.org/en/docs/Web/API/MutationObserver" target="_blank">MutationObserver</a> to listen to the attribute.  
   Take note that in this case the handlers will not fire in the same thread as the change, so if you need to schedule some work after the handlers, you will need to use `setTimeout(..., 0)`.
+- **nameOnAncestor** (_Optional_)  
+  If the name of the property is different on the ancestor, specify it here (specify 'camelCase' name, but this will also change the expected dash-case attribute and '*-changed' event names).  
 
 
 # HOW-TO: Native-like support for `<fieldset disabled>`
@@ -118,7 +120,8 @@ Polymer({
                 if (propDef.ancestorObservedItem && !(propDef.ancestorObservedItem in PropertiesFromAncestorBehavior.ObservedItem))
                     throw 'Unknown ancestorObservedItem: "' + propDef.ObservedItem + '". Please use one of values from PropertiesFromAncestorBehavior.ObservedItem';
 
-                let dashedName = fromCamelCaseSymbolToDash(propName);
+                let propNameOnAncestor = propDef.nameOnAncestor || propName;
+                let dashedName = fromCamelCaseSymbolToDash(propNameOnAncestor);
                 let changeEventName = dashedName + '-changed';
 
                 let behaviorDefinition = {
@@ -132,14 +135,14 @@ Polymer({
                             !ancestorToObserve ?
                                 propDef.defaultValue
                                 :
-                                propName in ancestorToObserve ?
-                                    ancestorToObserve[propName]
+                                propNameOnAncestor in ancestorToObserve ?
+                                    ancestorToObserve[propNameOnAncestor]
                                     :
                                     this.deserialize(ancestorToObserve.getAttribute(dashedName), this.getPropertyInfo(propName).type);
 
                         if (ancestorToObserve) {
                             let observer;
-                            if (propDef.ancestorObservedItem === PropertiesFromAncestorBehavior.ObservedItem.ATTRIBUTE || !(propName in ancestorToObserve)) {
+                            if (propDef.ancestorObservedItem === PropertiesFromAncestorBehavior.ObservedItem.ATTRIBUTE || !(propNameOnAncestor in ancestorToObserve)) {
                                 observer = new MutationObserver(function (mutations) {
                                     this[propName] = this.deserialize(ancestorToObserve.getAttribute(dashedName), this.getPropertyInfo(propName).type)
                                 }.bind(this));
@@ -150,7 +153,7 @@ Polymer({
                             }
                             else {
                                 let changeEventListener = function () {
-                                    this[propName] = ancestorToObserve[propName];
+                                    this[propName] = ancestorToObserve[propNameOnAncestor];
                                 }.bind(this);
 
                                 ancestorToObserve.addEventListener(changeEventName, changeEventListener);
