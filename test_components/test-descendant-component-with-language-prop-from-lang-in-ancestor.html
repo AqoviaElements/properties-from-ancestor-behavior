@@ -1,0 +1,24 @@
+﻿<link rel="import" href="../../polymer/polymer.html" />
+<link rel="import" href="../properties-from-ancestor-behavior.html"/>
+<dom-module id="test-descendant-component-with-language-prop-from-lang-in-ancestor">
+    <template>
+        <h1>Descendant component</h1>
+        disabled={{disabled}}
+    </template>
+</dom-module>
+<script>
+    Polymer({
+        is: "test-descendant-component-with-language-prop-from-lang-in-ancestor",
+        behaviors: [
+            PropertiesFromAncestorBehavior({
+                language: {
+                    nameOnAncestor: 'lang',
+                    ancestorObservedItem: PropertiesFromAncestorBehavior.ObservedItem.ATTRIBUTE, /*elements have a lang property but changing it doesn't emit disabled-changed*/
+                },
+            })
+        ],
+        properties: {
+            language: String,
+        }
+    });
+</script>
