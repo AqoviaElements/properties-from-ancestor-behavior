@@ -22,10 +22,10 @@ _[Demo and API docs](https://www.webcomponents.org/element/AqoviaElements/proper
 ```html
     <example-ancestor-component my-prop1="Initial Value" my-prop2="Initial Value">
         <div>
-            <example-descendant-component></test-descendant-component>
+            <example-descendant-component></example-descendant-component>
         </div>
         <div>
-            <example-descendant-component></test-descendant-component>
+            <example-descendant-component></example-descendant-component>
         </div>
     </example-ancestor-component>
 ```
