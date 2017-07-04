@@ -11,11 +11,15 @@
         is: "test-descendant-component",
         behaviors: [
             PropertiesFromAncestorBehavior({
-                myProp1: {}
+                myProp1: String,
+                myBoolProp1: Boolean,
+                myNumberProp1: Number,
             })
         ],
         properties: {
-            myProp1: {},
+            myProp1: String,
+            myBoolProp1: Boolean,
+            myNumberProp1: Number,
         }
     });
 </script>

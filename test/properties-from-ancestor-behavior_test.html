@@ -121,6 +121,54 @@
         });
     </script>
 
+    <test-fixture id="plain-html-element-ancestor-bool-prop">
+        <template>
+            <div my-bool-prop1>
+                <div>
+                    <test-descendant-component></test-descendant-component>
+                </div>
+            </div>
+        </template>
+    </test-fixture>
+    <script>
+        suite('plain-html-element-ancestor-bool-prop', function () {
+            var ancestor;
+            var descendant;
+            setup(function () {
+                ancestor = fixture('plain-html-element-ancestor-bool-prop');
+                descendant = ancestor.querySelector('test-descendant-component');
+            });
+
+            test('descendant receives initial boolean value of plain html element ancestor', function () {
+                expect(descendant.myBoolProp1).to.be.equal(true);
+            });
+        });
+    </script>
+
+    <test-fixture id="plain-html-element-ancestor-number-prop">
+        <template>
+            <div my-number-prop1="1337">
+                <div>
+                    <test-descendant-component></test-descendant-component>
+                </div>
+            </div>
+        </template>
+    </test-fixture>
+    <script>
+        suite('plain-html-element-ancestor-number-prop', function () {
+            var ancestor;
+            var descendant;
+            setup(function () {
+                ancestor = fixture('plain-html-element-ancestor-number-prop');
+                descendant = ancestor.querySelector('test-descendant-component');
+            });
+
+            test('descendant receives initial number value of plain html element ancestor', function () {
+                expect(descendant.myNumberProp1).to.be.equal(1337);
+            });
+        });
+    </script>
+
     <test-fixture id="web-component-container-ancestor">
         <template>
             <test-ancestor-component-as-container my-prop1="initialValue">
