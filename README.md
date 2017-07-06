@@ -22,10 +22,10 @@ _[Demo and API docs](https://www.webcomponents.org/element/AqoviaElements/proper
 ```html
     <example-ancestor-component my-prop1="Initial Value" my-prop2="Initial Value">
         <div>
-            <example-descendant-component></test-descendant-component>
+            <example-descendant-component></example-descendant-component>
         </div>
         <div>
-            <example-descendant-component></test-descendant-component>
+            <example-descendant-component></example-descendant-component>
         </div>
     </example-ancestor-component>
 ```
@@ -34,9 +34,9 @@ _[Demo and API docs](https://www.webcomponents.org/element/AqoviaElements/proper
 
 ## PropertiesFromAncestorBehavior
 
-Behavior for a web component to take a property value from the closest ancestor that has it. Supports change events.
+A <a href="https://www.polymer-project.org" target="_blank">Polymer</a> Behavior for a web component to take a property value from the closest ancestor that has it. Supports change events.
 
-Such a tool can be useful for ubiquitous properties (think language of the UI, currency, etc.) which would otherwise pollute attributes of every component with same boilerplate expression, or force usage of a global variable (usually without binding to changes).
+Such a tool can be useful for ubiquitous properties (think language of the UI, currency, [`disabled` state to every input of a form](#how-to-native-like-support-for-fieldset-disabled), etc.) which would otherwise pollute attributes of every component with same boilerplate expression, or force usage of a global variable (usually without binding to changes).
 
 ### Usage:
 
@@ -48,9 +48,10 @@ Polymer({
         PropertiesFromAncestorBehavior({
             // Just declaring a property here is enough to make it work.
             myProp1: {
-                // Optionally, you can provide a default. If no ancestor with value is found, `defaultValue` will to be used:
-                defaultValue: 123,
-                // (don't use the polymer's 'value:' for this though, because it may cause double initialization - once with such value, once with the value from ancestor (if they're different). That's because we can only reach the ancestor on 'attached', which happens after defaults get applied.
+                // Optionally, you can provide a default. If no ancestor is found, `defaultValue` will to be used:
+                defaultValue: 123, // (don't use the polymer's 'value:' for this though, because it may cause double initialization - once with such value, once with the value from ancestor (if they're different). That's because we can only reach the ancestor on 'attached', which happens after defaults get applied.
+
+                // See "API Reference - Per-Property settings" for all available options
 
                 // If you don't care about polylint, you can avoid repetition and just put here all other property settings. They get passed to declaration of this property on the element:
                 notify: true,
@@ -86,3 +87,53 @@ while their values will come from the closest ancestor that has the correspondin
 </example-container-component>
 ```
 
+# API Reference - Per-Property settings #
+These parameters can be specified for each property:
+- **defaultValue** (_Optional_)  
+  If no ancestor is found, `defaultValue` will to be used.  
+- **ancestorMatches** (_Optional_)
+  of type <a href="ttps://www.w3.org/TR/selectors4/" target="_blank">HTML Selector</a>  
+  - Instead of looking for ancestor with the dash-case attribute, you can provide a selector. This especially is needed for boolean attributes that start with 'false', because it's represented as no attribute at all.
+  Example:
+    `ancestorMatches: '.ancestor-markup-class'` - will listen to the closest ancestor with `class="ancestor-markup-class"`
+- **ancestorObservedItem** (_Optional_)  
+  of enum type  
+    `PropertiesFromAncestorBehavior.ObservedItem.PROPERTY_CHANGED_EVENT` (default)  
+    `PropertiesFromAncestorBehavior.ObservedItem.ATTRIBUTE`  
+  If the ancestor doesn't emit `*-changed` events, you can use `ATTRIBUTE` to tell the behavior that it should use a <a href="https://developer.mozilla.org/en/docs/Web/API/MutationObserver" target="_blank">MutationObserver</a> to listen to the attribute.  
+  Take note that in this case the handlers will not fire in the same thread as the change, so if you need to schedule some work after the handlers, you will need to use `setTimeout(..., 0)`.
+
+
+# HOW-TO: Native-like support for `<fieldset disabled>`
+The native HTML form input elements like `<input>`, `<button>`, `<select>` elements don't require you to pass the `disabled` attribute to each usage. You use the ancestor <a href="https://html.spec.whatwg.org/multipage/form-elements.html#attr-fieldset-disabled" target="_blank">`fieldset` disabled</a> feature to disable all of the containing inputs.
+
+Here's how this behavior can be used to support the same feature when your web component isn't built from these native inputs:
+```
+<template>
+    <span on-tap="{{handleTap}}">Something only clickable when enabled</span>
+</template>
+...
+Polymer({
+    behaviors: [
+        PropertiesFromAncestorBehavior({
+            disabled: {
+                // Use 'ancestorMatches' to provide a way to match while it's enabled (has no disabled attribute)
+                ancestorMatches: 'fieldset',
+
+                // <fieldset> has a disabled property, but changing it doesn't emit 'disabled-changed' event, so we must observe the attribute:
+                ancestorObservedItem: PropertiesFromAncestorBehavior.ObservedItem.ATTRIBUTE,
+
+                // Specify type, to properly get empty 'disabled' attribute deserialized into 'true':
+                type: Boolean,
+            },
+        }),
+    ],
+    handleTap: () => {
+        if (this.disabled) return;
+    
+        // If we got here, we're enabled. Handle legitimate click:
+        this.DoSomething();
+    },
+    ...
+})
+```
