@@ -12,7 +12,7 @@
         behaviors: [
             PropertiesFromAncestorBehavior({
                 language: {
-                    nameOnAncestor: 'lang',
+                    ancestorPropertyAlias: 'lang',
                     ancestorObservedItem: PropertiesFromAncestorBehavior.ObservedItem.ATTRIBUTE, /*elements have a lang property but changing it doesn't emit disabled-changed*/
                 },
             })
