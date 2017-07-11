@@ -5,7 +5,7 @@
 
 A <a href="https://www.polymer-project.org" target="_blank">Polymer</a> Behavior for a web component to take a property value from the closest ancestor that has it. Supports change events.
 
-Such a tool can be useful for ubiquitous properties (think language of the UI, currency, [`disabled` state to every input of a form](#how-to-native-like-support-for-fieldset-disabled), etc.) which would otherwise pollute attributes of every component with same boilerplate expression, or force usage of a global variable (usually without binding to changes).
+Such a tool can be useful for ubiquitous properties (think [language of the UI](#html-lang), currency, [`disabled` state to every input of a form](#how-to-native-like-support-for-fieldset-disabled), etc.) which would otherwise pollute attributes of every component with same boilerplate expression, or force usage of a global variable (usually without binding to changes).
 
 ### Usage:
 
@@ -74,6 +74,39 @@ These parameters can be specified for each property:
 - **ancestorPropertyAlias** (_Optional_)  
   If the name of the property is different on the ancestor, specify it here (specify 'camelCase' name, but this will also change the expected dash-case attribute and '*-changed' event names).  
 
+# <a id="html-lang"></a>HOW-TO: Automatically reflect container's `lang` attribute in your multi-language component
+The <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/lang" target="_blank">HTML lang attribute</a> is a standard way to declare the content language. It's useful for applying `[lang=...]` CSS rules and <a href="https://www.w3.org/International/questions/qa-lang-why" target="_blank">is recommended for future applications</a>.
+It's then a perfect candidate to specify the language in one place and have your components automatically display the right contents:
+```HTML
+<html lang="en">
+  ...
+  <p>
+    <some-web-component>
+      <span>
+        <another-web-component></another-web-component>
+      <span>
+    </some-web-component>
+  </p>
+  ...
+</html>
+```
+to achieve this effect with the Polymer's <a href="https://github.com/PolymerElements/app-localize-behavior" target="_blank">`AppLocalizeBehavior`</a>, all you need to do is add our behavior next to it, with the following declaration:
+
+```JavaScript
+...
+behaviors: [
+    Polymer.AppLocalizeBehavior,
+    PropertiesFromAncestorBehavior({
+            language: {
+                // This is needed because `AppLocalizeBehavior` requires `language` for the name - see also https://github.com/PolymerElements/app-localize-behavior/issues/98
+                ancestorPropertyAlias: 'lang',
+                // Observing the attribute will allow changing the language and seeing immediate effect:
+                ancestorObservedItem: PropertiesFromAncestorBehavior.ObservedItem.ATTRIBUTE,
+            },
+        }),
+],
+...
+```
 
 # HOW-TO: Native-like support for `<fieldset disabled>`
 The native HTML form input elements like `<input>`, `<button>`, `<select>` elements don't require you to pass the `disabled` attribute to each usage. You use the ancestor <a href="https://html.spec.whatwg.org/multipage/form-elements.html#attr-fieldset-disabled" target="_blank">`fieldset` disabled</a> feature to disable all of the containing inputs.
