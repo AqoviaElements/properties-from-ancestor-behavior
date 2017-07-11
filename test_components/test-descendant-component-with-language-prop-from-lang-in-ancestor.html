@@ -7,18 +7,20 @@
     </template>
 </dom-module>
 <script>
-    Polymer({
-        is: "test-descendant-component-with-language-prop-from-lang-in-ancestor",
-        behaviors: [
-            PropertiesFromAncestorBehavior({
-                language: {
-                    ancestorPropertyAlias: 'lang',
-                    ancestorObservedItem: PropertiesFromAncestorBehavior.ObservedItem.ATTRIBUTE, /*elements have a lang property but changing it doesn't emit disabled-changed*/
-                },
-            })
-        ],
-        properties: {
-            language: String,
+    class TestDescendantComponentWithLanguagePropFromLangInAncestor extends Polymer.mixinBehaviors([
+        PropertiesFromAncestorBehavior({
+            language: {
+                ancestorPropertyAlias: 'lang',
+                ancestorObservedItem: PropertiesFromAncestorBehavior.ObservedItem.ATTRIBUTE, /*elements have a lang property but changing it doesn't emit disabled-changed*/
+            },
+        }),
+    ], Polymer.Element){
+        static get is() { return "test-descendant-component-with-language-prop-from-lang-in-ancestor"; }
+        static get properties() {
+            return {
+                language: String,
+            };
         }
-    });
+    }
+    customElements.define(TestDescendantComponentWithLanguagePropFromLangInAncestor.is, TestDescendantComponentWithLanguagePropFromLangInAncestor);
 </script>

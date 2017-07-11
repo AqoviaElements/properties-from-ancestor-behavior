@@ -9,10 +9,10 @@
     <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
     <script src="../../web-component-tester/browser.js"></script>
 
-    <link rel="import" href="../../polymer/polymer.html" />
     <link rel="import" href="../test_components/test-ancestor-component-as-container.html">
     <link rel="import" href="../test_components/test-ancestor-component-with-own-template.html">
     <link rel="import" href="../test_components/test-descendant-component.html">
+    <link rel="import" href="../test_components/test-descendant-component-legacy-requiring-polymer-constructor.html">
     <link rel="import" href="../test_components/test-descendant-component-with-default.html">
     <link rel="import" href="../test_components/test-descendant-component-with-custom-prop-declaration.html">
     <link rel="import" href="../test_components/test-descendant-component-disablable-from-fieldset-starting-as-false.html">
@@ -126,7 +126,7 @@
 
     <test-fixture id="plain-html-element-ancestor-bool-prop">
         <template>
-            <div my-bool-prop1>
+            <div my-bool-prop1 my-bool-prop-from-behavior-as-legacy-hybrid1>
                 <div>
                     <test-descendant-component></test-descendant-component>
                 </div>
@@ -144,6 +144,7 @@
 
             test('descendant receives initial boolean value of plain html element ancestor', function () {
                 expect(descendant.myBoolProp1).to.be.equal(true);
+                expect(descendant.myBoolPropFromBehaviorAsLegacyHybrid1).to.be.equal(true);
             });
         });
     </script>
@@ -184,7 +185,7 @@
 
     <test-fixture id="plain-html-element-ancestor-number-prop">
         <template>
-            <div my-number-prop1="1337">
+            <div my-number-prop1="1337" my-number-prop-from-mixin1="1338" my-number-prop-from-behavior-as-legacy-hybrid1="1339">
                 <div>
                     <test-descendant-component></test-descendant-component>
                 </div>
@@ -202,6 +203,35 @@
 
             test('descendant receives initial number value of plain html element ancestor', function () {
                 expect(descendant.myNumberProp1).to.be.equal(1337);
+                expect(descendant.myNumberPropFromMixin1).to.be.equal(1338);
+                expect(descendant.myNumberPropFromBehaviorAsLegacyHybrid1).to.be.equal(1339);
+            });
+        });
+    </script>
+
+    <test-fixture id="plain-html-element-ancestor-prop-legacy-requiring-polymer-constructor">
+        <template>
+            <div my-number-prop1="1337" my-number-prop-from-behavior-as-legacy-hybrid1="1338" my-bool-prop1 my-bool-prop-from-behavior-as-legacy-hybrid1>
+                <div>
+                    <test-descendant-component-legacy-requiring-polymer-constructor></test-descendant-component-legacy-requiring-polymer-constructor>
+                </div>
+            </div>
+        </template>
+    </test-fixture>
+    <script>
+        suite('plain-html-element-ancestor-prop-legacy-requiring-polymer-constructor', function () {
+            let ancestor;
+            let descendant;
+            setup(function () {
+                ancestor = fixture('plain-html-element-ancestor-prop-legacy-requiring-polymer-constructor');
+                descendant = ancestor.querySelector('test-descendant-component-legacy-requiring-polymer-constructor');
+            });
+
+            test('legacy (non-class) descendant receives initial typed values of plain html element ancestor', function () {
+                expect(descendant.myNumberProp1).to.be.equal(1337);
+                expect(descendant.myNumberPropFromBehaviorAsLegacyHybrid1).to.be.equal(1338);
+                expect(descendant.myBoolProp1).to.be.equal(true);
+                expect(descendant.myBoolPropFromBehaviorAsLegacyHybrid1).to.be.equal(true);
             });
         });
     </script>
@@ -273,7 +303,7 @@
             let descendant;
             setup(function () {
                 ancestor = fixture('web-component-with-own-template-ancestor');
-                descendant = ancestor.$$('test-descendant-component');
+                descendant = ancestor.shadowRoot.querySelector('test-descendant-component');
             });
 
             test('descendant receives initial value of plain html element ancestor', function () {
@@ -366,7 +396,7 @@
                 descendant = ancestor.querySelector('test-descendant-component-with-multiple-usages-of-the-mixin');
             });
 
-            test('each usages observer gets disconnected', function (done) {
+            test('each usages observer gets disconnected', function () {
                 let disconnectFired = false;
 
                 var observers = descendant.__propertiesFromAncestorBehavior.observers;
@@ -386,16 +416,8 @@
                 }
                 ancestor.parentNode.removeChild(ancestor);
 
-                setTimeout(() => { // Needed at least for Polymer 1.X on Firefox and IE. Didn't seem to be needed for Polymer 2.0
-                    try {
-                        expect(observersDisconnectCalls).to.be.equal(observersLength);
-                        expect(observers).to.be.empty;
-                        done();
-                    }
-                    catch (e) {
-                        done(e);
-                    }
-                }, 0);
+                expect(observersDisconnectCalls).to.be.equal(observersLength);
+                expect(observers).to.be.empty;
             });
         });
     </script>

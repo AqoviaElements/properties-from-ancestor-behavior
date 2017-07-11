@@ -1,4 +1,4 @@
-﻿<link rel="import" href="../../polymer/polymer.html" />
+﻿<link rel="import" href="../../polymer/polymer-element.html" />
 <dom-module id="test-ancestor-component-as-container">
     <template>
         <fieldset>
@@ -6,19 +6,22 @@
             <input type="text" value="{{myProp1::input}}" />
             <fieldset>
                 <legend>Content</legend>
-                <content select="*"></content>
+                <slot></slot>
             </fieldset>
         </fieldset>
     </template>
 </dom-module>
 <script>
-    Polymer({
-        is: "test-ancestor-component-as-container",
-        properties: {
-            myProp1: {
-                notify: true, // Notify is required for the descendants to receive changes
-                reflectToAttribute: true,
-            }
-        },
-    });
+    class TestAncestorComponentAsContainer extends Polymer.Element {
+        static get is() { return "test-ancestor-component-as-container"; }
+        static get properties() {
+            return {
+                myProp1: {
+                    notify: true, // Notify is required for the descendants to receive changes
+                    reflectToAttribute: true,
+                }
+            };
+        }
+    }
+    customElements.define(TestAncestorComponentAsContainer.is, TestAncestorComponentAsContainer);
 </script>
