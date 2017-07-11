@@ -1,0 +1,28 @@
+﻿<link rel="import" href="../../polymer/polymer.html" />
+<link rel="import" href="../properties-from-ancestor-behavior.html"/>
+<dom-module id="test-descendant-component-with-multiple-usages-of-the-mixin">
+    <template>
+        <h1>Descendant component</h1>
+        myProp1 value is {{myProp1}}
+        myProp2 value is {{myProp2}}
+    </template>
+</dom-module>
+<script>
+    Polymer({
+        is: "test-descendant-component-with-multiple-usages-of-the-mixin",
+        behaviors: [
+            PropertiesFromAncestorBehavior({
+                myProp1: {
+                },
+            }),
+            PropertiesFromAncestorBehavior({
+                myProp2: {
+                },
+            }),
+        ],
+        properties: {
+            myProp1: {},
+            myProp2: {},
+        },
+    });
+</script>

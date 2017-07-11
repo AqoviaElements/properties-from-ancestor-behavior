@@ -161,8 +161,10 @@ Polymer({
                     properties: {},
                     attached: function () {
                         let ancestorToObserve = polymerClosestThatMatches(this, propDef.ancestorMatches || '[' + dashedName + ']');
-                        this.__propertiesFromAncestorBehavior = {
-                        };
+                        if (!this.__propertiesFromAncestorBehavior)
+                            this.__propertiesFromAncestorBehavior = {
+                                observers: [],
+                            };
 
                         this[propName] =
                             !ancestorToObserve ?
@@ -198,12 +200,13 @@ Polymer({
                                 };
                             }
 
-                            this.__propertiesFromAncestorBehavior.observer = observer;
+                            this.__propertiesFromAncestorBehavior.observers.push(observer);
                         }
                     },
                     detached: function () {
-                        if (this.__propertiesFromAncestorBehavior.observer)
-                            this.__propertiesFromAncestorBehavior.observer.disconnect();
+                        let observer;
+                        while (observer = this.__propertiesFromAncestorBehavior.observers.pop())
+                            observer.disconnect();
                     },
                 };
 
