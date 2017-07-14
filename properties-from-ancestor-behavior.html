@@ -17,7 +17,7 @@ Polymer({
         PropertiesFromAncestorBehavior({
             // Just declaring a property here is enough to make it work.
             myProp1: {
-                // Optionally, you can provide a default. If no ancestor is found, `defaultValue` will to be used:
+                // Optionally, you can provide a default. If no ancestor is found, `defaultValue` will be used:
                 defaultValue: 123, // (don't use the polymer's 'value:' for this though, because it may cause double initialization - once with such value, once with the value from ancestor (if they're different). That's because we can only reach the ancestor on 'attached', which happens after defaults get applied.
 
                 // See "API Reference - Per-Property settings" for all available options
@@ -59,7 +59,7 @@ while their values will come from the closest ancestor that has the correspondin
 # API Reference - Per-Property settings #
 These parameters can be specified for each property:
 - **defaultValue** (_Optional_)  
-  If no ancestor is found, `defaultValue` will to be used.  
+  If no ancestor is found, `defaultValue` will be used.  
 - **ancestorMatches** (_Optional_)
   of type <a href="ttps://www.w3.org/TR/selectors4/" target="_blank">HTML Selector</a>  
   - Instead of looking for ancestor with the dash-case attribute, you can provide a selector. This especially is needed for boolean attributes that start with 'false', because it's represented as no attribute at all.
