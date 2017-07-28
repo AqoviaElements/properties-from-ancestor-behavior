@@ -17,6 +17,7 @@
     <link rel="import" href="../test_components/test-descendant-component-with-custom-prop-declaration.html">
     <link rel="import" href="../test_components/test-descendant-component-disablable-from-fieldset-starting-as-false.html">
     <link rel="import" href="../test_components/test-descendant-component-with-language-prop-from-lang-in-ancestor.html">
+    <link rel="import" href="../test_components/test-descendant-component-with-multiple-usages-of-the-mixin.html">
   </head>
 <body>
     <test-fixture id="plain-html-direct-value">
@@ -344,6 +345,57 @@
                 expect(descendant1.myProp1).to.be.equal("valueForDescendant1");
                 ancestor2.myProp1 = 'valueForDescendant2';
                 expect(descendant2.myProp1).to.be.equal("valueForDescendant2");
+            });
+        });
+    </script>
+
+    <test-fixture id="memory-cleanup-on-detach-with-multiple-usages-of-the-mixin">
+        <template>
+            <div my-prop1="whatev" my-prop2="whatev">
+                <!-- Use the component that uses our mixin many times, so that we can detect potential errors of same initializer erasing the observers of the previous run, when executed multiple times. -->
+                <test-descendant-component-with-multiple-usages-of-the-mixin></test-descendant-component-with-multiple-usages-of-the-mixin>
+            </div>
+        </template>
+    </test-fixture>
+    <script>
+        suite('memory-cleanup-on-detach-with-multiple-usages-of-the-mixin', function () {
+            let ancestor;
+            let descendant;
+            setup(function () {
+                ancestor = fixture('memory-cleanup-on-detach-with-multiple-usages-of-the-mixin');
+                descendant = ancestor.querySelector('test-descendant-component-with-multiple-usages-of-the-mixin');
+            });
+
+            test('each usages observer gets disconnected', function (done) {
+                let disconnectFired = false;
+
+                var observers = descendant.__propertiesFromAncestorBehavior.observers;
+
+                let observersLength = observers.length;
+                let observersDisconnectCalls = 0;
+
+                expect(observersLength).to.not.be.equal(0);
+
+                for (let i = 0; i < observersLength; i++) {
+                    let observer = observers[i];
+                    let originalDisconnect = observer.disconnect;
+                    observer.disconnect = function () {
+                        originalDisconnect.apply(this, arguments);
+                        ++observersDisconnectCalls;
+                    };
+                }
+                ancestor.parentNode.removeChild(ancestor);
+
+                setTimeout(() => { // Needed at least for Polymer 1.X on Firefox and IE. Didn't seem to be needed for Polymer 2.0
+                    try {
+                        expect(observersDisconnectCalls).to.be.equal(observersLength);
+                        expect(observers).to.be.empty;
+                        done();
+                    }
+                    catch (e) {
+                        done(e);
+                    }
+                }, 0);
             });
         });
     </script>
