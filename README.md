@@ -36,7 +36,10 @@ _[Demo and API docs](https://www.webcomponents.org/element/AqoviaElements/proper
 
 A <a href="https://www.polymer-project.org" target="_blank">Polymer</a> Behavior for a web component to take a property value from the closest ancestor that has it. Supports change events.
 
-Such a tool can be useful for ubiquitous properties (think [language of the UI](#html-lang), currency, [`disabled` state to every input of a form](#how-to-native-like-support-for-fieldset-disabled), etc.) which would otherwise pollute attributes of every component with same boilerplate expression, or force usage of a global variable (usually without binding to changes).
+## Where it might be a good idea?
+
+It can be useful for ubiquitous properties (think [language of the UI](#html-lang), currency, [`disabled` state to every input of a form](#how-to-native-like-support-for-fieldset-disabled), etc.) which would otherwise pollute attributes of every component with same boilerplate expression, or force usage of a global variable (usually without binding to changes).  
+An extra feature of [being able to observe attributes](#ancestorObservedItem) helps with achieving easy-to-use web components, reusable in other app frameworks or pure HTML.
 
 ### Usage:
 
@@ -96,7 +99,7 @@ These parameters can be specified for each property:
   - Instead of looking for ancestor with the dash-case attribute, you can provide a selector. This especially is needed for boolean attributes that start with 'false', because it's represented as no attribute at all.
   Example:
     `ancestorMatches: '.ancestor-markup-class'` - will listen to the closest ancestor with `class="ancestor-markup-class"`
-- **ancestorObservedItem** (_Optional_)  
+- **ancestorObservedItem** (_Optional_)<a id="ancestorObservedItem"></a>  
   of enum type  
     `PropertiesFromAncestorBehavior.ObservedItem.PROPERTY_CHANGED_EVENT` (default)  
     `PropertiesFromAncestorBehavior.ObservedItem.ATTRIBUTE`  
