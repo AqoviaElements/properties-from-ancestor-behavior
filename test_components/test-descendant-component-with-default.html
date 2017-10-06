@@ -7,17 +7,19 @@
     </template>
 </dom-module>
 <script>
-    Polymer({
-        is: "test-descendant-component-with-default",
-        behaviors: [
-            PropertiesFromAncestorBehavior({
-                myProp1: {
-                    defaultValue: 'defaultValue',
-                },
-            })
-        ],
-        properties: {
-            myProp1: {},
-        },
-    });
+    class TestDescendantComponentWithDefault extends Polymer.mixinBehaviors([
+        PropertiesFromAncestorBehavior({
+            myProp1: {
+                defaultValue: 'defaultValue',
+            },
+        }),
+    ], Polymer.Element){
+        static get is() { return "test-descendant-component-with-default"; }
+        static get properties() {
+            return {
+                myProp1: {},
+            };
+        }
+    }
+    customElements.define(TestDescendantComponentWithDefault.is, TestDescendantComponentWithDefault);
 </script>

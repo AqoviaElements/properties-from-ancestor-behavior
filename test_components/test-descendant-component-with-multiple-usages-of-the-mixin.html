@@ -8,21 +8,23 @@
     </template>
 </dom-module>
 <script>
-    Polymer({
-        is: "test-descendant-component-with-multiple-usages-of-the-mixin",
-        behaviors: [
-            PropertiesFromAncestorBehavior({
-                myProp1: {
-                },
-            }),
-            PropertiesFromAncestorBehavior({
-                myProp2: {
-                },
-            }),
-        ],
-        properties: {
-            myProp1: {},
-            myProp2: {},
-        },
-    });
+    class TestDescendantComponentWithMultipleUsagesOfTheMixin extends Polymer.mixinBehaviors([
+        PropertiesFromAncestorBehavior({
+            myProp1: {
+            },
+        }),
+        PropertiesFromAncestorBehavior({
+            myProp2: {
+            },
+        }),
+    ], Polymer.Element){
+        static get is() { return "test-descendant-component-with-multiple-usages-of-the-mixin"; }
+        static get properties() {
+            return {
+                myProp1: {},
+                myProp2: {},
+            };
+        }
+    }
+    customElements.define(TestDescendantComponentWithMultipleUsagesOfTheMixin.is, TestDescendantComponentWithMultipleUsagesOfTheMixin);
 </script>

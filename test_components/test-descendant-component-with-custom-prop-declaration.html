@@ -7,36 +7,38 @@
     </template>
 </dom-module>
 <script>
-    Polymer({
-        is: "test-descendant-component-with-custom-prop-declaration",
-        behaviors: [
-            PropertiesFromAncestorBehavior({
-                myProp1: {
-                    defaultValue: 'defaultValue',
-                    observer: '_myProp1ChangedInBehavior',
-                },
-            })
-        ],
-        properties: {
+    class TestDescendantComponentWithCustomPropDeclaration extends Polymer.mixinBehaviors([
+        PropertiesFromAncestorBehavior({
             myProp1: {
-                observer: '_myProp1Changed',
-                notify: true,
-                reflectToAttribute: true,
+                defaultValue: 'defaultValue',
+                observer: '_myProp1ChangedInBehavior',
             },
-            _myProp1ChangedObserverInBehaviorFired: Boolean,
-            _myProp1ChangedObserverFired: Boolean,
-            _myProp1ChangedEventFired: Boolean,
-        },
-        created: function () {
+        }),
+    ], Polymer.Element){
+        static get is() { return "test-descendant-component-with-custom-prop-declaration"; }
+        static get properties() {
+            return {
+                myProp1: {
+                    observer: '_myProp1Changed',
+                    notify: true,
+                    reflectToAttribute: true,
+                },
+                _myProp1ChangedObserverInBehaviorFired: Boolean,
+                _myProp1ChangedObserverFired: Boolean,
+                _myProp1ChangedEventFired: Boolean,
+            };
+        }
+        created() {
             this.addEventListener('my-prop1-changed', function () {
                     this._myProp1ChangedEventFired = true;
                 }.bind(this))
-        },
-        _myProp1Changed: function () {
+        }
+        _myProp1Changed() {
             this._myProp1ChangedObserverFired = true;
-        },
-        _myProp1ChangedInBehavior: function () {
+        }
+        _myProp1ChangedInBehavior() {
             this._myProp1ChangedObserverInBehaviorFired = true;
-        },
-    });
+        }
+    }
+    customElements.define(TestDescendantComponentWithCustomPropDeclaration.is, TestDescendantComponentWithCustomPropDeclaration);
 </script>

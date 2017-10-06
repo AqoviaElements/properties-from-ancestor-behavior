@@ -45,10 +45,8 @@ An extra feature of [being able to observe attributes](#ancestorObservedItem) he
 
 Technically, it's a behavior factory function. To have a behavior instance created, you call the `PropertiesFromAncestorBehavior()`.
 ```JavaScript
-Polymer({
-    is: 'example-descendant-component',
-    behaviors: [
-        PropertiesFromAncestorBehavior({
+class MyComponent extends Polymer.mixinBehaviors([
+    PropertiesFromAncestorBehavior({
             // Just declaring a property here is enough to make it work.
             myProp1: {
                 // Optionally, you can provide a default. If no ancestor is found, `defaultValue` will be used:
@@ -60,18 +58,21 @@ Polymer({
                 notify: true,
                 observer: '_myProp1Changed',
             },
-        }),
-    ],
-    properties: {
+        }) ], Polymer.Element)
+{
+    static get is() { return "example-descendant-component"; }
+    static get properties() {
+        return {
             // But if you want to keep polylint happy, you need to list the property here too:
             myProp1: {
                 // Custom settings still work:
                 notify: true,
                 observer: '_myProp1Changed',
                 // But you don't want to use 'value:' here but rather 'defaultValue:' above. See comment there for 'why'.
-            },
+            }
+        };
     }
-})
+}
 ```
 
 the above declaration will make the properties available in `<example-descendant-component>`s template:
@@ -128,7 +129,7 @@ to achieve this effect with the Polymer's <a href="https://github.com/PolymerEle
 
 ```JavaScript
 ...
-behaviors: [
+class ... extends ...
     Polymer.AppLocalizeBehavior,
     PropertiesFromAncestorBehavior({
             language: {
@@ -138,7 +139,6 @@ behaviors: [
                 ancestorObservedItem: PropertiesFromAncestorBehavior.ObservedItem.ATTRIBUTE,
             },
         }),
-],
 ...
 ```
 
@@ -151,9 +151,8 @@ Here's how this behavior can be used to support the same feature when your web c
     <span on-tap="{{handleTap}}">Something only clickable when enabled</span>
 </template>
 ...
-Polymer({
-    behaviors: [
-        PropertiesFromAncestorBehavior({
+class ... extends ...
+    PropertiesFromAncestorBehavior({
             disabled: {
                 // Use 'ancestorMatches' to provide a way to match while it's enabled (has no disabled attribute)
                 ancestorMatches: 'fieldset',
@@ -164,14 +163,15 @@ Polymer({
                 // Specify type, to properly get empty 'disabled' attribute deserialized into 'true':
                 type: Boolean,
             },
-        }),
-    ],
-    handleTap: () => {
+        })
+    ...
+{
+    ...
+    handleTap() {
         if (this.disabled) return;
     
         // If we got here, we're enabled. Handle legitimate click:
         this.DoSomething();
-    },
-    ...
-})
+    }
+}
 ```

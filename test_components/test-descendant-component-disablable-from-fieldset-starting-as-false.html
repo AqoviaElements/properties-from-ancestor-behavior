@@ -7,19 +7,21 @@
     </template>
 </dom-module>
 <script>
-    Polymer({
-        is: "test-descendant-component-disablable-from-fieldset-starting-as-false",
-        behaviors: [
-            PropertiesFromAncestorBehavior({
-                disabled: {
-                    type: Boolean,
-                    ancestorMatches: 'fieldset',
-                    ancestorObservedItem: PropertiesFromAncestorBehavior.ObservedItem.ATTRIBUTE, /*<fieldset> has a disabled property but changing it doesn't emit disabled-changed*/
-                },
-            })
-        ],
-        properties: {
-            disabled: Boolean,
+    class TestDescendantComponentDisablableFromFieldsetStartingAsFalse extends Polymer.mixinBehaviors([
+        PropertiesFromAncestorBehavior({
+            disabled: {
+                type: Boolean,
+                ancestorMatches: 'fieldset',
+                ancestorObservedItem: PropertiesFromAncestorBehavior.ObservedItem.ATTRIBUTE, /*<fieldset> has a disabled property but changing it doesn't emit disabled-changed*/
+            },
+        }),
+    ], Polymer.Element) {
+        static get is() { return "test-descendant-component-disablable-from-fieldset-starting-as-false"; }
+        static get properties() {
+            return {
+                disabled: Boolean,
+            };
         }
-    });
+    }
+    customElements.define(TestDescendantComponentDisablableFromFieldsetStartingAsFalse.is, TestDescendantComponentDisablableFromFieldsetStartingAsFalse);
 </script>
