@@ -60,7 +60,7 @@ class MyComponent extends Polymer.mixinBehaviors([
             },
         }) ], Polymer.Element)
 {
-    static get is() { return "example-descendant-component"; }
+    static get is() { return "my-component"; }
     static get properties() {
         return {
             // But if you want to keep polylint happy, you need to list the property here too:
@@ -75,7 +75,7 @@ class MyComponent extends Polymer.mixinBehaviors([
 }
 ```
 
-the above declaration will make the properties available in `<example-descendant-component>`s template:
+the above declaration will make the properties available in `<my-component>`s template:
 ```HTML
 <template>
     myProp1 value is {{myProp1}}
@@ -87,7 +87,7 @@ the above declaration will make the properties available in `<example-descendant
 while their values will come from the closest ancestor that has the corresponding dash-case attribute.
 ```HTML
 <example-container-component my-prop1="some value" my-prop2="some other value"><!-- Container can also be a simple HTML <div>. As long as it has the attributes. These attributes are a requirement to discover the ancestor. If the element also has matching properties, they instead will be taken and their changes listened to. -->
-  <example-descendant-component></example-descendant-component>
+  <my-component></my-component>
 </example-container-component>
 ```
 
