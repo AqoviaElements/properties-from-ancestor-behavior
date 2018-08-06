@@ -15,7 +15,7 @@ before_script:
 - polylint
 - chmod -R +x ./bower_components/git-version-tagging
 script:
-- xvfb-run wct
+- xvfb-run npm test
 after_success:
 - git config credential.helper "store --file=.git/credentials"
 - echo "https://${GITHUB_TOKEN}:@github.com" > .git/credentials
