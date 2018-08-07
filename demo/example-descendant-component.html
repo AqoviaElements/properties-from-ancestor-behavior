@@ -11,17 +11,19 @@
     </template>
 </dom-module>
 <script>
-    Polymer({
-        is: "example-descendant-component",
-        behaviors: [
-            PropertiesFromAncestorBehavior({
-                myProp1: {},
-                myProp2: {},
-            })
-        ],
-        properties: {
+    class ExampleDescendantComponent extends Polymer.mixinBehaviors([
+        PropertiesFromAncestorBehavior({
             myProp1: {},
             myProp2: {},
+        }),
+    ], Polymer.Element) {
+        static get is() { return "example-descendant-component"; }
+        static get properties() {
+            return {
+                myProp1: {},
+                myProp2: {},
+            };
         }
-    });
+    }
+    customElements.define(ExampleDescendantComponent.is, ExampleDescendantComponent);
 </script>

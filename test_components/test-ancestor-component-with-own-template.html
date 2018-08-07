@@ -1,4 +1,4 @@
-﻿<link rel="import" href="../../polymer/polymer.html" />
+﻿<link rel="import" href="../../polymer/polymer-element.html" />
 <link rel="import" href="./test-descendant-component.html" />
 <dom-module id="test-ancestor-component-with-own-template">
     <template>
@@ -18,13 +18,16 @@
     </template>
 </dom-module>
 <script>
-    Polymer({
-        is: "test-ancestor-component-with-own-template",
-        properties: {
-            myProp1: {
-                notify: true, // Notify is required for the descendants to receive changes
-                reflectToAttribute: true,
-            }
-        },
-    });
+    class TestAncestorComponentWithOwnTemplate extends Polymer.Element {
+        static get is() { return "test-ancestor-component-with-own-template"; }
+        static get properties() {
+            return {
+                myProp1: {
+                    notify: true, // Notify is required for the descendants to receive changes
+                    reflectToAttribute: true,
+                }
+            };
+        }
+    }
+    customElements.define(TestAncestorComponentWithOwnTemplate.is, TestAncestorComponentWithOwnTemplate);
 </script>

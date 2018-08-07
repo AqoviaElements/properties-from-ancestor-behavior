@@ -36,16 +36,17 @@ _[Demo and API docs](https://www.webcomponents.org/element/AqoviaElements/proper
 
 A <a href="https://www.polymer-project.org" target="_blank">Polymer</a> Behavior for a web component to take a property value from the closest ancestor that has it. Supports change events.
 
-Such a tool can be useful for ubiquitous properties (think [language of the UI](#html-lang), currency, [`disabled` state to every input of a form](#how-to-native-like-support-for-fieldset-disabled), etc.) which would otherwise pollute attributes of every component with same boilerplate expression, or force usage of a global variable (usually without binding to changes).
+## Where it might be a good idea?
+
+It can be useful for ubiquitous properties (think [language of the UI](#html-lang), currency, [`disabled` state to every input of a form](#how-to-native-like-support-for-fieldset-disabled), etc.) which would otherwise pollute attributes of every component with same boilerplate expression, or force usage of a global variable (usually without binding to changes).  
+An extra feature of [being able to observe attributes](#ancestorObservedItem) helps with achieving easy-to-use web components, reusable in other app frameworks or pure HTML.
 
 ### Usage:
 
 Technically, it's a behavior factory function. To have a behavior instance created, you call the `PropertiesFromAncestorBehavior()`.
 ```JavaScript
-Polymer({
-    is: 'example-descendant-component',
-    behaviors: [
-        PropertiesFromAncestorBehavior({
+class MyComponent extends Polymer.mixinBehaviors([
+    PropertiesFromAncestorBehavior({
             // Just declaring a property here is enough to make it work.
             myProp1: {
                 // Optionally, you can provide a default. If no ancestor is found, `defaultValue` will be used:
@@ -57,21 +58,24 @@ Polymer({
                 notify: true,
                 observer: '_myProp1Changed',
             },
-        }),
-    ],
-    properties: {
+        }) ], Polymer.Element)
+{
+    static get is() { return "my-component"; }
+    static get properties() {
+        return {
             // But if you want to keep polylint happy, you need to list the property here too:
             myProp1: {
                 // Custom settings still work:
                 notify: true,
                 observer: '_myProp1Changed',
                 // But you don't want to use 'value:' here but rather 'defaultValue:' above. See comment there for 'why'.
-            },
+            }
+        };
     }
-})
+}
 ```
 
-the above declaration will make the properties available in `<example-descendant-component>`s template:
+the above declaration will make the properties available in `<my-component>`s template:
 ```HTML
 <template>
     myProp1 value is {{myProp1}}
@@ -83,7 +87,7 @@ the above declaration will make the properties available in `<example-descendant
 while their values will come from the closest ancestor that has the corresponding dash-case attribute.
 ```HTML
 <example-container-component my-prop1="some value" my-prop2="some other value"><!-- Container can also be a simple HTML <div>. As long as it has the attributes. These attributes are a requirement to discover the ancestor. If the element also has matching properties, they instead will be taken and their changes listened to. -->
-  <example-descendant-component></example-descendant-component>
+  <my-component></my-component>
 </example-container-component>
 ```
 
@@ -96,7 +100,7 @@ These parameters can be specified for each property:
   - Instead of looking for ancestor with the dash-case attribute, you can provide a selector. This especially is needed for boolean attributes that start with 'false', because it's represented as no attribute at all.
   Example:
     `ancestorMatches: '.ancestor-markup-class'` - will listen to the closest ancestor with `class="ancestor-markup-class"`
-- **ancestorObservedItem** (_Optional_)  
+- **ancestorObservedItem** (_Optional_)<a id="ancestorObservedItem"></a>  
   of enum type  
     `PropertiesFromAncestorBehavior.ObservedItem.PROPERTY_CHANGED_EVENT` (default)  
     `PropertiesFromAncestorBehavior.ObservedItem.ATTRIBUTE`  
@@ -125,7 +129,7 @@ to achieve this effect with the Polymer's <a href="https://github.com/PolymerEle
 
 ```JavaScript
 ...
-behaviors: [
+class ... extends ...
     Polymer.AppLocalizeBehavior,
     PropertiesFromAncestorBehavior({
             language: {
@@ -135,7 +139,6 @@ behaviors: [
                 ancestorObservedItem: PropertiesFromAncestorBehavior.ObservedItem.ATTRIBUTE,
             },
         }),
-],
 ...
 ```
 
@@ -148,9 +151,8 @@ Here's how this behavior can be used to support the same feature when your web c
     <span on-tap="{{handleTap}}">Something only clickable when enabled</span>
 </template>
 ...
-Polymer({
-    behaviors: [
-        PropertiesFromAncestorBehavior({
+class ... extends ...
+    PropertiesFromAncestorBehavior({
             disabled: {
                 // Use 'ancestorMatches' to provide a way to match while it's enabled (has no disabled attribute)
                 ancestorMatches: 'fieldset',
@@ -161,14 +163,15 @@ Polymer({
                 // Specify type, to properly get empty 'disabled' attribute deserialized into 'true':
                 type: Boolean,
             },
-        }),
-    ],
-    handleTap: () => {
+        })
+    ...
+{
+    ...
+    handleTap() {
         if (this.disabled) return;
     
         // If we got here, we're enabled. Handle legitimate click:
         this.DoSomething();
-    },
-    ...
-})
+    }
+}
 ```
