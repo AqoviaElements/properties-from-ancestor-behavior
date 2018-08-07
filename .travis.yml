@@ -1,7 +1,7 @@
 language: node_js
 dist: trusty
 sudo: required
-node_js: '6'
+node_js: '8'
 addons:
   firefox: latest
   apt:
@@ -10,12 +10,12 @@ addons:
     packages:
     - google-chrome-stable
 before_script:
-- npm install -g bower polylint web-component-tester
+- npm install
 - bower install
 - polylint
 - chmod -R +x ./bower_components/git-version-tagging
 script:
-- xvfb-run wct
+- xvfb-run npm test
 after_success:
 - git config credential.helper "store --file=.git/credentials"
 - echo "https://${GITHUB_TOKEN}:@github.com" > .git/credentials
