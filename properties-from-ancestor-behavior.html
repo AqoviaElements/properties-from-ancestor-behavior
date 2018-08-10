@@ -160,7 +160,7 @@ Polymer({
                 let behaviorDefinition = {
                     properties: {},
                     attached: function () {
-                        let ancestorToObserve = polymerClosestThatMatches(this, propDef.ancestorMatches || '[' + dashedName + ']');
+                        let ancestorToObserve = this.hasAttribute(dashedName) ? this : polymerClosestThatMatches(this, propDef.ancestorMatches || '[' + dashedName + ']');
                         if (!this.__propertiesFromAncestorBehavior)
                             this.__propertiesFromAncestorBehavior = {
                                 observers: [],
