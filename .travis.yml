@@ -19,8 +19,7 @@ script:
 after_success:
 - git config credential.helper "store --file=.git/credentials"
 - echo "https://${GITHUB_TOKEN}:@github.com" > .git/credentials
-- if [ "${TRAVIS_BRANCH}" = "master" ] && [ "${TRAVIS_PULL_REQUEST}" = "false" ];
-  then ./bower_components/git-version-tagging/create-release.sh; fi
+- if [[ "${TRAVIS_BRANCH}" = "master" ]] || [[ "${TRAVIS_BRANCH}" == master-v* ]] && [[ "${TRAVIS_PULL_REQUEST}" = "false" ]]; then echo "Creating release"; ./bower_components/git-version-tagging/create-release.sh; fi
 env:
   global:
     secure: rOzjSkFj3hdZkj6tkn15DdUg6ntNOYqFjzvVkXQJCgIQFpjVxuN+2XeJBSiVxzh8mCfMBNHpRf3cK9LagEMK/rF9si7PIGFkKruyqFonMObZvHo30cb3NZ1+f0EA/9zMFUs+/9Zovzo8QuMKslY5UnXZ3o8n6iBT2UB3uEyX/M0/Rv8wzLqBztX+YrophG70VWfNLZijKJOcaMPhDjplHsmXZa3474QyKJmJadsLZXA/dgpqF1s+QJ4wKdqD57Ahc4kiD/XOqu7M+Lk+LeqQ8RawzRYfAlmLGc8IvQpDFdy0Tky8K8lqCDmq9xA+pkKpjq8mvkT/ClbFZn1a4SrSeGyu0KuHehqjekiuaS0eYF4xhadmjrZNsICX17nXHxcz0NRGrwuJK8QTat4k5qrI5tEDfnyMVBt+I2dQ/WK/cNKMdCqs6fJsnOXrbz9mrM+oTGfj2YTkldOuZ/+ic1IcgDPpRM5TAdcoTIEX2dNvxcgB9Bc1nvdfTeH3CXjzMp8OaIVGPHnr14paaNoA6XvXBlnv5pDMEp4wRWHyQx2uQ0Zi6TT0Wipmabb9bUjrT6mLD/kAvqbalQl8XhviHxptFYe4rg4ux2O+yhJd5r4KANJ3axucri96ArxZ7cY+QcYRW1eaPUi2Xx4JZjwkVyT4j5ZgrkKGY5c3PbmJkLePyF8=

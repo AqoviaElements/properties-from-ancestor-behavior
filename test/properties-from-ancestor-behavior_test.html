@@ -182,7 +182,37 @@
             });
         });
     </script>
+    <test-fixture id="plain-html-element-bool-prop-starting-as-true-with-ancestor-not-set">
+        <template>
+            <fieldset>
+                <div>
+                    <test-descendant-component-disablable-from-fieldset-starting-as-false disabled></test-descendant-component-disablable-from-fieldset-starting-as-false>
+                </div>
+            </fieldset>
+        </template>
+    </test-fixture>
+    <script>
+        suite('plain-html-element-bool-prop-starting-as-true-with-ancestor-not-set', function () {
+            let ancestor;
+            let descendant;
+            setup(function () {
+                ancestor = fixture('plain-html-element-bool-prop-starting-as-true-with-ancestor-not-set');
+                descendant = ancestor.querySelector('test-descendant-component-disablable-from-fieldset-starting-as-false');
+            });
 
+            test("descendant keeps boolean 'true' value applied directly if html element ancestor doesn't have it", function (done) {
+                setTimeout(() => { // MutationObserver doesn't run in the same thread as the property change, so let's make sure it has run.
+                    try {
+                        expect(descendant.disabled).to.be.equal(true);
+                        done();
+                    }
+                    catch (e) {
+                        done(e);
+                    }
+                }, 0);
+            });
+        });
+    </script>
     <test-fixture id="plain-html-element-ancestor-number-prop">
         <template>
             <div my-number-prop1="1337" my-number-prop-from-mixin1="1338" my-number-prop-from-behavior-as-legacy-hybrid1="1339">
