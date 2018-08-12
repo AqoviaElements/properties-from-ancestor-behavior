@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html>
   <head>
     <meta charset="utf-8">
@@ -6,11 +6,13 @@
 
     <title>properties-from-ancestor-behavior</title>
 
-    <script src="../webcomponentsjs/webcomponents-lite.js"></script>
+    <script src="./node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
 
-    <link rel="import" href="../iron-component-page/iron-component-page.html">
+    <script type="module">
+      import '@polymer/iron-component-page/iron-component-page';
+    </script>
   </head>
   <body>
-    <iron-component-page src="properties-from-ancestor-behavior.html"></iron-component-page>
+    <iron-component-page></iron-component-page>
   </body>
 </html>
