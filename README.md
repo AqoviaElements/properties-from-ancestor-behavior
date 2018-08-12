@@ -1,4 +1,4 @@
-![Bower version](https://img.shields.io/bower/v/properties-from-ancestor-behavior.svg)
+![Published bower package version](https://badge.fury.io/bo/properties-from-ancestor-behavior.svg)
 [![Build status](https://travis-ci.org/AqoviaElements/properties-from-ancestor-behavior.svg?branch=master)](https://travis-ci.org/AqoviaElements/properties-from-ancestor-behavior)
 [![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://www.webcomponents.org/element/AqoviaElements/properties-from-ancestor-behavior)
 
