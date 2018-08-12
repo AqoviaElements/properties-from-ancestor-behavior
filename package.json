@@ -6,7 +6,8 @@
     "polymer-cli": "^1.7.7",
     "@webcomponents/webcomponentsjs": "^2.0.0",
     "@polymer/iron-component-page": "^3.0.0-pre.19",
-    "@polymer/iron-demo-helpers": "^3.0.0-pre.19"
+    "@polymer/iron-demo-helpers": "^3.0.0-pre.19",
+    "wct-browser-legacy": "^1.0.1"
   },
   "scripts": {
     "analyze-code-for-index.html": "polymer analyze -i properties-from-ancestor-behavior.js > analysis.json; NOCOMMIT TODO build time",
