@@ -1,13 +1,15 @@
 {
   "name": "properties-from-ancestor-behavior",
-  "description": "Behavior for a web component to take a property value from the closest ancestor that has it. Supports change events.",
+  "description": "Polymer mixin (behavior) for a web component to take a property value from the closest ancestor that has it.",
   "main": "properties-from-ancestor-behavior.html",
   "authors": [
     "Aqovia"
   ],
   "keywords": [
-    "web-components",
+    "html-elements",
     "polymer",
+    "polymer-elements",
+    "web-components",
     "ancestor",
     "property",
     "closest"

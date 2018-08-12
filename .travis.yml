@@ -12,7 +12,6 @@ addons:
 before_script:
 - npm install
 - bower install
-- polylint
 - chmod -R +x ./bower_components/git-version-tagging
 script:
 - xvfb-run npm test
