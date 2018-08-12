@@ -11,6 +11,7 @@
   "scripts": {
     "analyze-code-for-index.html": "polymer analyze -i properties-from-ancestor-behavior.js > analysis.json; NOCOMMIT TODO build time",
     "component-info-page-serve-and-open": "polymer serve --open",
-    "test": "polymer lint && polymer test"
+    "test": "polymer lint && polymer test",
+    "build": "NOCOMMIT - test && https://www.polymer-project.org/3.0/docs/tools/polymer-cli-commands"
   }
 }
