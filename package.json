@@ -8,6 +8,7 @@
     "@polymer/iron-demo-helpers": "^3.0.0-pre.19"
   },
   "scripts": {
+    "analyze-code-for-index.html": "polymer analyze > analysis.json TODO bower? https://github.com/PolymerElements/iron-component-page ",
     "test": "polymer lint && polymer test"
   }
 }
