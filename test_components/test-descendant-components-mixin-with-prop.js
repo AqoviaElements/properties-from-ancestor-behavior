@@ -1,0 +1,10 @@
+TestDescendantComponentsMixinWithProp = function (superClass) {
+    return class extends superClass {
+        static get properties() {
+            return {
+                myBoolPropFromMixin1: Boolean,
+                myNumberPropFromMixin1: Number,
+            };
+        }
+    };
+};
