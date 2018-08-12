@@ -3,7 +3,8 @@
     "@polymer/polymer": "^3.0.5"
   },
   "devDependencies": {
-    "polymer-cli": "^1.7.7"
+    "polymer-cli": "^1.7.7",
+    "@webcomponents/webcomponentsjs": "^2.0.0"
   },
   "scripts": {
     "test": "polymer lint && polymer test"
