@@ -6,6 +6,6 @@
     "web-component-tester": "^6.7.1"
   },
   "scripts": {
-    "test": "wct"
+    "test": "polylint && wct"
   }
 }
