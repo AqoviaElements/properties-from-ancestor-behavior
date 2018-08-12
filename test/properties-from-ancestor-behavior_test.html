@@ -9,15 +9,15 @@
     <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
     <script src="../../web-component-tester/browser.js"></script>
 
-    <link rel="import" href="../test_components/test-ancestor-component-as-container.html">
-    <link rel="import" href="../test_components/test-ancestor-component-with-own-template.html">
-    <link rel="import" href="../test_components/test-descendant-component.html">
-    <link rel="import" href="../test_components/test-descendant-component-legacy-requiring-polymer-constructor.html">
-    <link rel="import" href="../test_components/test-descendant-component-with-default.html">
-    <link rel="import" href="../test_components/test-descendant-component-with-custom-prop-declaration.html">
-    <link rel="import" href="../test_components/test-descendant-component-disablable-from-fieldset-starting-as-false.html">
-    <link rel="import" href="../test_components/test-descendant-component-with-language-prop-from-lang-in-ancestor.html">
-    <link rel="import" href="../test_components/test-descendant-component-with-multiple-usages-of-the-mixin.html">
+  <script src="../../@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>nt-as-container.js"></script>
+    <script type="module" src="../test_components/test-ancestor-component-with-own-template.js"></script>
+    <script type="module" src="../test_components/test-descendant-component.js"></script>
+    <script type="module" src="../test_components/test-descendant-component-legacy-requiring-polymer-constructor.js"></script>
+    <script type="module" src="../test_components/test-descendant-component-with-default.js"></script>
+    <script type="module" src="../test_components/test-descendant-component-with-custom-prop-declaration.js"></script>
+    <script type="module" src="../test_components/test-descendant-component-disablable-from-fieldset-starting-as-false.js"></script>
+    <script type="module" src="../test_components/test-descendant-component-with-language-prop-from-lang-in-ancestor.js"></script>
+    <script type="module" src="../test_components/test-descendant-component-with-multiple-usages-of-the-mixin.js"></script>
   </head>
 <body>
     <test-fixture id="plain-html-direct-value">
@@ -31,21 +31,29 @@
     <script>
         suite('plain-html-direct-value', function () {
             let ancestor;
-            let descendant;
-            setup(function () {
-                ancestor = fixture('plain-html-direct-value');
-                descendant = ancestor.querySelector('test-descendant-component');
-            });
+    <script type="module">
+import '../test_components/test-ancestor-component-as-container.js';
+import '../test_components/test-ancestor-component-with-own-template.js';
+import '../test_components/test-descendant-component.js';
+import '../test_components/test-descendant-component-legacy-requiring-polymer-constructor.js';
+import '../test_components/test-descendant-component-with-default.js';
+import '../test_components/test-descendant-component-with-custom-prop-declaration.js';
+import '../test_components/test-descendant-component-disablable-from-fieldset-starting-as-false.js';
+import '../test_components/test-descendant-component-with-language-prop-from-lang-in-ancestor.js';
+import '../test_components/test-descendant-component-with-multiple-usages-of-the-mixin.js';
+suite('plain-html-direct-value', function () {
+    let ancestor;
+    let descendant;
+    setup(function () {
+        ancestor = fixture('plain-html-direct-value');
+        descendant = ancestor.querySelector('test-descendant-component');
+    });
 
-            test('when attribute specified on descendant itself, it takes precedence', function () {
-                expect(descendant.myProp1).to.be.equal("directValue");
-            });
-        });
-    </script>
-
-    <test-fixture id="plain-html-default-value">
-        <template>
-            <div>
+    test('when attribute specified on descendant itself, it takes precedence', function () {
+        expect(descendant.myProp1).to.be.equal("directValue");
+    });
+});
+</script>div>
                 <p>Some content.</p>
                 <test-descendant-component-with-default></test-descendant-component-with-default>
             </div>
@@ -56,21 +64,29 @@
             let ancestor;
             let descendant;
             setup(function () {
-                ancestor = fixture('plain-html-default-value');
-                descendant = ancestor.querySelector('test-descendant-component-with-default');
-            });
+    <script type="module">
+import '../test_components/test-ancestor-component-as-container.js';
+import '../test_components/test-ancestor-component-with-own-template.js';
+import '../test_components/test-descendant-component.js';
+import '../test_components/test-descendant-component-legacy-requiring-polymer-constructor.js';
+import '../test_components/test-descendant-component-with-default.js';
+import '../test_components/test-descendant-component-with-custom-prop-declaration.js';
+import '../test_components/test-descendant-component-disablable-from-fieldset-starting-as-false.js';
+import '../test_components/test-descendant-component-with-language-prop-from-lang-in-ancestor.js';
+import '../test_components/test-descendant-component-with-multiple-usages-of-the-mixin.js';
+suite('plain-html-default-value', function () {
+    let ancestor;
+    let descendant;
+    setup(function () {
+        ancestor = fixture('plain-html-default-value');
+        descendant = ancestor.querySelector('test-descendant-component-with-default');
+    });
 
-            test('when no ancestor found and "defaultValue:" specified, its value is set', function () {
-                expect(descendant.myProp1).to.be.equal("defaultValue");
-            });
-        });
-    </script>
-
-    <test-fixture id="plain-html-custom-prop-declaration">
-        <template>
-            <div my-prop1="someValue">
-                <p>Some content.</p>
-                <test-descendant-component-with-custom-prop-declaration></test-descendant-component-with-custom-prop-declaration>
+    test('when no ancestor found and "defaultValue:" specified, its value is set', function () {
+        expect(descendant.myProp1).to.be.equal("defaultValue");
+    });
+});
+</script>   <test-descendant-component-with-custom-prop-declaration></test-descendant-component-with-custom-prop-declaration>
             </div>
         </template>
     </test-fixture>
@@ -81,33 +97,39 @@
             setup(function () {
                 ancestor = fixture('plain-html-custom-prop-declaration');
                 descendant = ancestor.querySelector('test-descendant-component-with-custom-prop-declaration');
-                descendant.myProp1 = 'newValue';
-            });
+    <script type="module">
+import '../test_components/test-ancestor-component-as-container.js';
+import '../test_components/test-ancestor-component-with-own-template.js';
+import '../test_components/test-descendant-component.js';
+import '../test_components/test-descendant-component-legacy-requiring-polymer-constructor.js';
+import '../test_components/test-descendant-component-with-default.js';
+import '../test_components/test-descendant-component-with-custom-prop-declaration.js';
+import '../test_components/test-descendant-component-disablable-from-fieldset-starting-as-false.js';
+import '../test_components/test-descendant-component-with-language-prop-from-lang-in-ancestor.js';
+import '../test_components/test-descendant-component-with-multiple-usages-of-the-mixin.js';
+suite('plain-html-custom-prop-declaration', function () {
+    let ancestor;
+    let descendant;
+    setup(function () {
+        ancestor = fixture('plain-html-custom-prop-declaration');
+        descendant = ancestor.querySelector('test-descendant-component-with-custom-prop-declaration');
+        descendant.myProp1 = 'newValue';
+    });
 
-            test('when property declaration has `reflectToAttribute`, it works', function () {
-                expect(descendant.getAttribute('my-prop1')).to.be.equal("newValue");
-            });
+    test('when property declaration has `reflectToAttribute`, it works', function () {
+        expect(descendant.getAttribute('my-prop1')).to.be.equal("newValue");
+    });
 
-            test('when property declaration has "observer", it works', function () {
-                expect(descendant._myProp1ChangedObserverFired).to.be.equal(true);
-                expect(descendant._myProp1ChangedObserverInBehaviorFired).to.be.equal(true);
-            });
+    test('when property declaration has "observer", it works', function () {
+        expect(descendant._myProp1ChangedObserverFired).to.be.equal(true);
+        expect(descendant._myProp1ChangedObserverInBehaviorFired).to.be.equal(true);
+    });
 
-            test('when property declaration has "notify", it works', function () {
-                expect(descendant._myProp1ChangedEventFired).to.be.equal(true);
-            });
-        });
-    </script>
-
-    <test-fixture id="plain-html-element-ancestor">
-        <template>
-            <div my-prop1="initialValue">
-                <div>
-                    <p>Some content.</p>
-                    <test-descendant-component></test-descendant-component>
-                </div>
-            </div>
-        </template>
+    test('when property declaration has "notify", it works', function () {
+        expect(descendant._myProp1ChangedEventFired).to.be.equal(true);
+    });
+});
+</script>plate>
     </test-fixture>
     <script>
         suite('plain-html-element-ancestor', function () {
@@ -120,21 +142,29 @@
 
             test('descendant receives initial value of plain html element ancestor', function () {
                 expect(descendant.myProp1).to.be.equal("initialValue");
-            });
-        });
-    </script>
+    <script type="module">
+import '../test_components/test-ancestor-component-as-container.js';
+import '../test_components/test-ancestor-component-with-own-template.js';
+import '../test_components/test-descendant-component.js';
+import '../test_components/test-descendant-component-legacy-requiring-polymer-constructor.js';
+import '../test_components/test-descendant-component-with-default.js';
+import '../test_components/test-descendant-component-with-custom-prop-declaration.js';
+import '../test_components/test-descendant-component-disablable-from-fieldset-starting-as-false.js';
+import '../test_components/test-descendant-component-with-language-prop-from-lang-in-ancestor.js';
+import '../test_components/test-descendant-component-with-multiple-usages-of-the-mixin.js';
+suite('plain-html-element-ancestor', function () {
+    let ancestor;
+    let descendant;
+    setup(function () {
+        ancestor = fixture('plain-html-element-ancestor');
+        descendant = ancestor.querySelector('test-descendant-component');
+    });
 
-    <test-fixture id="plain-html-element-ancestor-bool-prop">
-        <template>
-            <div my-bool-prop1 my-bool-prop-from-behavior-as-legacy-hybrid1>
-                <div>
-                    <test-descendant-component></test-descendant-component>
-                </div>
-            </div>
-        </template>
-    </test-fixture>
-    <script>
-        suite('plain-html-element-ancestor-bool-prop', function () {
+    test('descendant receives initial value of plain html element ancestor', function () {
+        expect(descendant.myProp1).to.be.equal("initialValue");
+    });
+});
+</script>('plain-html-element-ancestor-bool-prop', function () {
             let ancestor;
             let descendant;
             setup(function () {
@@ -146,22 +176,30 @@
                 expect(descendant.myBoolProp1).to.be.equal(true);
                 expect(descendant.myBoolPropFromBehaviorAsLegacyHybrid1).to.be.equal(true);
             });
-        });
-    </script>
+    <script type="module">
+import '../test_components/test-ancestor-component-as-container.js';
+import '../test_components/test-ancestor-component-with-own-template.js';
+import '../test_components/test-descendant-component.js';
+import '../test_components/test-descendant-component-legacy-requiring-polymer-constructor.js';
+import '../test_components/test-descendant-component-with-default.js';
+import '../test_components/test-descendant-component-with-custom-prop-declaration.js';
+import '../test_components/test-descendant-component-disablable-from-fieldset-starting-as-false.js';
+import '../test_components/test-descendant-component-with-language-prop-from-lang-in-ancestor.js';
+import '../test_components/test-descendant-component-with-multiple-usages-of-the-mixin.js';
+suite('plain-html-element-ancestor-bool-prop', function () {
+    let ancestor;
+    let descendant;
+    setup(function () {
+        ancestor = fixture('plain-html-element-ancestor-bool-prop');
+        descendant = ancestor.querySelector('test-descendant-component');
+    });
 
-    <test-fixture id="plain-html-element-ancestor-bool-prop-starting-as-false">
-        <template>
-            <fieldset>
-                <div>
-                    <test-descendant-component-disablable-from-fieldset-starting-as-false></test-descendant-component-disablable-from-fieldset-starting-as-false>
-                </div>
-            </fieldset>
-        </template>
-    </test-fixture>
-    <script>
-        suite('plain-html-element-ancestor-bool-prop-starting-as-false', function () {
-            let ancestor;
-            let descendant;
+    test('descendant receives initial boolean value of plain html element ancestor', function () {
+        expect(descendant.myBoolProp1).to.be.equal(true);
+        expect(descendant.myBoolPropFromBehaviorAsLegacyHybrid1).to.be.equal(true);
+    });
+});
+</script>et descendant;
             setup(function () {
                 ancestor = fixture('plain-html-element-ancestor-bool-prop-starting-as-false');
                 descendant = ancestor.querySelector('test-descendant-component-disablable-from-fieldset-starting-as-false');
@@ -173,32 +211,39 @@
                 setTimeout(() => { // MutationObserver doesn't run in the same thread as the property change. Still, better than nothing.
                     try {
                         expect(descendant.disabled).to.be.equal(true);
-                        done();
-                    }
-                    catch (e) {
-                        done(e);
-                    }
-                }, 0);
-            });
-        });
-    </script>
-    <test-fixture id="plain-html-element-bool-prop-starting-as-true-with-ancestor-not-set">
-        <template>
-            <fieldset>
-                <div>
-                    <test-descendant-component-disablable-from-fieldset-starting-as-false disabled></test-descendant-component-disablable-from-fieldset-starting-as-false>
-                </div>
-            </fieldset>
-        </template>
-    </test-fixture>
-    <script>
-        suite('plain-html-element-bool-prop-starting-as-true-with-ancestor-not-set', function () {
-            let ancestor;
-            let descendant;
-            setup(function () {
-                ancestor = fixture('plain-html-element-bool-prop-starting-as-true-with-ancestor-not-set');
-                descendant = ancestor.querySelector('test-descendant-component-disablable-from-fieldset-starting-as-false');
-            });
+    <script type="module">
+import '../test_components/test-ancestor-component-as-container.js';
+import '../test_components/test-ancestor-component-with-own-template.js';
+import '../test_components/test-descendant-component.js';
+import '../test_components/test-descendant-component-legacy-requiring-polymer-constructor.js';
+import '../test_components/test-descendant-component-with-default.js';
+import '../test_components/test-descendant-component-with-custom-prop-declaration.js';
+import '../test_components/test-descendant-component-disablable-from-fieldset-starting-as-false.js';
+import '../test_components/test-descendant-component-with-language-prop-from-lang-in-ancestor.js';
+import '../test_components/test-descendant-component-with-multiple-usages-of-the-mixin.js';
+suite('plain-html-element-ancestor-bool-prop-starting-as-false', function () {
+    let ancestor;
+    let descendant;
+    setup(function () {
+        ancestor = fixture('plain-html-element-ancestor-bool-prop-starting-as-false');
+        descendant = ancestor.querySelector('test-descendant-component-disablable-from-fieldset-starting-as-false');
+    });
+
+    test('descendant receives boolean value changed from false to true of plain html element ancestor', function (done) {
+        ancestor.disabled = true;
+
+        setTimeout(() => { // MutationObserver doesn't run in the same thread as the property change. Still, better than nothing.
+            try {
+                expect(descendant.disabled).to.be.equal(true);
+                done();
+            }
+            catch (e) {
+                done(e);
+            }
+        }, 0);
+    });
+});
+</script>);
 
             test("descendant keeps boolean 'true' value applied directly if html element ancestor doesn't have it", function (done) {
                 setTimeout(() => { // MutationObserver doesn't run in the same thread as the property change, so let's make sure it has run.
@@ -208,30 +253,37 @@
                     }
                     catch (e) {
                         done(e);
-                    }
-                }, 0);
-            });
-        });
-    </script>
-    <test-fixture id="plain-html-element-ancestor-number-prop">
-        <template>
-            <div my-number-prop1="1337" my-number-prop-from-mixin1="1338" my-number-prop-from-behavior-as-legacy-hybrid1="1339">
-                <div>
-                    <test-descendant-component></test-descendant-component>
-                </div>
-            </div>
-        </template>
-    </test-fixture>
-    <script>
-        suite('plain-html-element-ancestor-number-prop', function () {
-            let ancestor;
-            let descendant;
-            setup(function () {
-                ancestor = fixture('plain-html-element-ancestor-number-prop');
-                descendant = ancestor.querySelector('test-descendant-component');
-            });
+    <script type="module">
+import '../test_components/test-ancestor-component-as-container.js';
+import '../test_components/test-ancestor-component-with-own-template.js';
+import '../test_components/test-descendant-component.js';
+import '../test_components/test-descendant-component-legacy-requiring-polymer-constructor.js';
+import '../test_components/test-descendant-component-with-default.js';
+import '../test_components/test-descendant-component-with-custom-prop-declaration.js';
+import '../test_components/test-descendant-component-disablable-from-fieldset-starting-as-false.js';
+import '../test_components/test-descendant-component-with-language-prop-from-lang-in-ancestor.js';
+import '../test_components/test-descendant-component-with-multiple-usages-of-the-mixin.js';
+suite('plain-html-element-bool-prop-starting-as-true-with-ancestor-not-set', function () {
+    let ancestor;
+    let descendant;
+    setup(function () {
+        ancestor = fixture('plain-html-element-bool-prop-starting-as-true-with-ancestor-not-set');
+        descendant = ancestor.querySelector('test-descendant-component-disablable-from-fieldset-starting-as-false');
+    });
 
-            test('descendant receives initial number value of plain html element ancestor', function () {
+    test("descendant keeps boolean 'true' value applied directly if html element ancestor doesn't have it", function (done) {
+        setTimeout(() => { // MutationObserver doesn't run in the same thread as the property change, so let's make sure it has run.
+            try {
+                expect(descendant.disabled).to.be.equal(true);
+                done();
+            }
+            catch (e) {
+                done(e);
+            }
+        }, 0);
+    });
+});
+</script> test('descendant receives initial number value of plain html element ancestor', function () {
                 expect(descendant.myNumberProp1).to.be.equal(1337);
                 expect(descendant.myNumberPropFromMixin1).to.be.equal(1338);
                 expect(descendant.myNumberPropFromBehaviorAsLegacyHybrid1).to.be.equal(1339);
@@ -240,24 +292,31 @@
     </script>
 
     <test-fixture id="plain-html-element-ancestor-prop-legacy-requiring-polymer-constructor">
-        <template>
-            <div my-number-prop1="1337" my-number-prop-from-behavior-as-legacy-hybrid1="1338" my-bool-prop1 my-bool-prop-from-behavior-as-legacy-hybrid1>
-                <div>
-                    <test-descendant-component-legacy-requiring-polymer-constructor></test-descendant-component-legacy-requiring-polymer-constructor>
-                </div>
-            </div>
-        </template>
-    </test-fixture>
-    <script>
-        suite('plain-html-element-ancestor-prop-legacy-requiring-polymer-constructor', function () {
-            let ancestor;
-            let descendant;
-            setup(function () {
-                ancestor = fixture('plain-html-element-ancestor-prop-legacy-requiring-polymer-constructor');
-                descendant = ancestor.querySelector('test-descendant-component-legacy-requiring-polymer-constructor');
-            });
+    <script type="module">
+import '../test_components/test-ancestor-component-as-container.js';
+import '../test_components/test-ancestor-component-with-own-template.js';
+import '../test_components/test-descendant-component.js';
+import '../test_components/test-descendant-component-legacy-requiring-polymer-constructor.js';
+import '../test_components/test-descendant-component-with-default.js';
+import '../test_components/test-descendant-component-with-custom-prop-declaration.js';
+import '../test_components/test-descendant-component-disablable-from-fieldset-starting-as-false.js';
+import '../test_components/test-descendant-component-with-language-prop-from-lang-in-ancestor.js';
+import '../test_components/test-descendant-component-with-multiple-usages-of-the-mixin.js';
+suite('plain-html-element-ancestor-number-prop', function () {
+    let ancestor;
+    let descendant;
+    setup(function () {
+        ancestor = fixture('plain-html-element-ancestor-number-prop');
+        descendant = ancestor.querySelector('test-descendant-component');
+    });
 
-            test('legacy (non-class) descendant receives initial typed values of plain html element ancestor', function () {
+    test('descendant receives initial number value of plain html element ancestor', function () {
+        expect(descendant.myNumberProp1).to.be.equal(1337);
+        expect(descendant.myNumberPropFromMixin1).to.be.equal(1338);
+        expect(descendant.myNumberPropFromBehaviorAsLegacyHybrid1).to.be.equal(1339);
+    });
+});
+</script> test('legacy (non-class) descendant receives initial typed values of plain html element ancestor', function () {
                 expect(descendant.myNumberProp1).to.be.equal(1337);
                 expect(descendant.myNumberPropFromBehaviorAsLegacyHybrid1).to.be.equal(1338);
                 expect(descendant.myBoolProp1).to.be.equal(true);
@@ -268,24 +327,32 @@
 
     <test-fixture id="plain-html-element-different-name-on-ancestor">
         <template>
-            <div lang="pl">
-                <h1>Cześć</h1>
-                <div>
-                    <test-descendant-component-with-language-prop-from-lang-in-ancestor></test-descendant-component-with-language-prop-from-lang-in-ancestor>
-                </div>
-            </div>
-        </template>
-    </test-fixture>
-    <script>
-        suite('plain-html-element-different-name-on-ancestor', function () {
-            let ancestor;
-            let descendant;
-            setup(function () {
-                ancestor = fixture('plain-html-element-different-name-on-ancestor');
-                descendant = ancestor.querySelector('test-descendant-component-with-language-prop-from-lang-in-ancestor');
-            });
+    <script type="module">
+import '../test_components/test-ancestor-component-as-container.js';
+import '../test_components/test-ancestor-component-with-own-template.js';
+import '../test_components/test-descendant-component.js';
+import '../test_components/test-descendant-component-legacy-requiring-polymer-constructor.js';
+import '../test_components/test-descendant-component-with-default.js';
+import '../test_components/test-descendant-component-with-custom-prop-declaration.js';
+import '../test_components/test-descendant-component-disablable-from-fieldset-starting-as-false.js';
+import '../test_components/test-descendant-component-with-language-prop-from-lang-in-ancestor.js';
+import '../test_components/test-descendant-component-with-multiple-usages-of-the-mixin.js';
+suite('plain-html-element-ancestor-prop-legacy-requiring-polymer-constructor', function () {
+    let ancestor;
+    let descendant;
+    setup(function () {
+        ancestor = fixture('plain-html-element-ancestor-prop-legacy-requiring-polymer-constructor');
+        descendant = ancestor.querySelector('test-descendant-component-legacy-requiring-polymer-constructor');
+    });
 
-            test('descendant receives initial value from a differently named attribute of plain html element ancestor', function () {
+    test('legacy (non-class) descendant receives initial typed values of plain html element ancestor', function () {
+        expect(descendant.myNumberProp1).to.be.equal(1337);
+        expect(descendant.myNumberPropFromBehaviorAsLegacyHybrid1).to.be.equal(1338);
+        expect(descendant.myBoolProp1).to.be.equal(true);
+        expect(descendant.myBoolPropFromBehaviorAsLegacyHybrid1).to.be.equal(true);
+    });
+});
+</script>est('descendant receives initial value from a differently named attribute of plain html element ancestor', function () {
                 expect(descendant.language).to.be.equal('pl');
             });
         });
@@ -298,21 +365,29 @@
                     <p>Some content.</p>
                     <test-descendant-component></test-descendant-component>
                 </div>
-            </test-ancestor-component-as-container>
-        </template>
-    </test-fixture>
+    <script type="module">
+import '../test_components/test-ancestor-component-as-container.js';
+import '../test_components/test-ancestor-component-with-own-template.js';
+import '../test_components/test-descendant-component.js';
+import '../test_components/test-descendant-component-legacy-requiring-polymer-constructor.js';
+import '../test_components/test-descendant-component-with-default.js';
+import '../test_components/test-descendant-component-with-custom-prop-declaration.js';
+import '../test_components/test-descendant-component-disablable-from-fieldset-starting-as-false.js';
+import '../test_components/test-descendant-component-with-language-prop-from-lang-in-ancestor.js';
+import '../test_components/test-descendant-component-with-multiple-usages-of-the-mixin.js';
+suite('plain-html-element-different-name-on-ancestor', function () {
+    let ancestor;
+    let descendant;
+    setup(function () {
+        ancestor = fixture('plain-html-element-different-name-on-ancestor');
+        descendant = ancestor.querySelector('test-descendant-component-with-language-prop-from-lang-in-ancestor');
+    });
 
-    <script>
-        suite('web-component-container-ancestor', function () {
-            let ancestor;
-            let descendant;
-            setup(function () {
-                ancestor = fixture('web-component-container-ancestor');
-                descendant = ancestor.querySelector('test-descendant-component');
-            });
-
-            test('descendant receives initial value of web-component ancestor', function () {
-                expect(descendant.myProp1).to.be.equal("initialValue");
+    test('descendant receives initial value from a differently named attribute of plain html element ancestor', function () {
+        expect(descendant.language).to.be.equal('pl');
+    });
+});
+</script>   expect(descendant.myProp1).to.be.equal("initialValue");
             });
 
             test('descendant receives changed value of web-component ancestor', function () {
@@ -327,27 +402,34 @@
             <test-ancestor-component-with-own-template></test-ancestor-component-with-own-template>
         </template>
     </test-fixture>
-    <script>
-        suite('web-component-with-own-template-ancestor', function () {
-            let ancestor;
-            let descendant;
-            setup(function () {
-                ancestor = fixture('web-component-with-own-template-ancestor');
-                descendant = ancestor.shadowRoot.querySelector('test-descendant-component');
-            });
+    <script type="module">
+import '../test_components/test-ancestor-component-as-container.js';
+import '../test_components/test-ancestor-component-with-own-template.js';
+import '../test_components/test-descendant-component.js';
+import '../test_components/test-descendant-component-legacy-requiring-polymer-constructor.js';
+import '../test_components/test-descendant-component-with-default.js';
+import '../test_components/test-descendant-component-with-custom-prop-declaration.js';
+import '../test_components/test-descendant-component-disablable-from-fieldset-starting-as-false.js';
+import '../test_components/test-descendant-component-with-language-prop-from-lang-in-ancestor.js';
+import '../test_components/test-descendant-component-with-multiple-usages-of-the-mixin.js';
+suite('web-component-container-ancestor', function () {
+    let ancestor;
+    let descendant;
+    setup(function () {
+        ancestor = fixture('web-component-container-ancestor');
+        descendant = ancestor.querySelector('test-descendant-component');
+    });
 
-            test('descendant receives initial value of plain html element ancestor', function () {
-                expect(descendant.myProp1).to.be.equal("initialValue");
-            });
-        });
-    </script>
+    test('descendant receives initial value of web-component ancestor', function () {
+        expect(descendant.myProp1).to.be.equal("initialValue");
+    });
 
-
-    <test-fixture id="plain-html-element-ancestor-inside-web-component-container">
-        <template>
-            <test-ancestor-component-as-container>
-                <div my-prop1="initialValue">
-                    <div>
+    test('descendant receives changed value of web-component ancestor', function () {
+        ancestor.myProp1 = 'changedValue';
+        expect(descendant.myProp1).to.be.equal("changedValue");
+    });
+});
+</script>       <div>
                         <p>Some content.</p>
                         <test-descendant-component></test-descendant-component>
                     </div>
@@ -355,22 +437,29 @@
             </test-ancestor-component-as-container>
         </template>
     </test-fixture>
-    <script>
-        suite('plain-html-element-inside-web-component-container-ancestor', function () {
-            let ancestor;
-            let descendant;
-            setup(function () {
-                ancestor = fixture('plain-html-element-ancestor-inside-web-component-container');
-                descendant = ancestor.querySelector('test-descendant-component');
-            });
+    <script type="module">
+import '../test_components/test-ancestor-component-as-container.js';
+import '../test_components/test-ancestor-component-with-own-template.js';
+import '../test_components/test-descendant-component.js';
+import '../test_components/test-descendant-component-legacy-requiring-polymer-constructor.js';
+import '../test_components/test-descendant-component-with-default.js';
+import '../test_components/test-descendant-component-with-custom-prop-declaration.js';
+import '../test_components/test-descendant-component-disablable-from-fieldset-starting-as-false.js';
+import '../test_components/test-descendant-component-with-language-prop-from-lang-in-ancestor.js';
+import '../test_components/test-descendant-component-with-multiple-usages-of-the-mixin.js';
+suite('web-component-with-own-template-ancestor', function () {
+    let ancestor;
+    let descendant;
+    setup(function () {
+        ancestor = fixture('web-component-with-own-template-ancestor');
+        descendant = ancestor.shadowRoot.querySelector('test-descendant-component');
+    });
 
-            test('descendant receives initial value of plain html element ancestor', function () {
-                expect(descendant.myProp1).to.be.equal("initialValue");
-            });
-        });
-    </script>
-
-    <test-fixture id="two-instances-of-same-descendant-in-containers-with-different-properties">
+    test('descendant receives initial value of plain html element ancestor', function () {
+        expect(descendant.myProp1).to.be.equal("initialValue");
+    });
+});
+</script>ixture id="two-instances-of-same-descendant-in-containers-with-different-properties">
         <template>
             <div>
                 <test-ancestor-component-as-container id="ancestor1" my-prop1="initialValue">
@@ -386,21 +475,29 @@
             </div>
         </template>
     </test-fixture>
-    <script>
-        suite('two-instances-of-same-descendant-in-containers-with-different-properties', function () {
-            let ancestor1;
-            let ancestor2;
-            let descendant1;
-            let descendant2;
-            setup(function () {
-                let template = fixture('two-instances-of-same-descendant-in-containers-with-different-properties');
-                ancestor1 = template.querySelector('#ancestor1');
-                ancestor2 = template.querySelector('#ancestor2');
-                descendant1 = ancestor1.querySelector('test-descendant-component');
-                descendant2 = ancestor2.querySelector('test-descendant-component');
-            });
+    <script type="module">
+import '../test_components/test-ancestor-component-as-container.js';
+import '../test_components/test-ancestor-component-with-own-template.js';
+import '../test_components/test-descendant-component.js';
+import '../test_components/test-descendant-component-legacy-requiring-polymer-constructor.js';
+import '../test_components/test-descendant-component-with-default.js';
+import '../test_components/test-descendant-component-with-custom-prop-declaration.js';
+import '../test_components/test-descendant-component-disablable-from-fieldset-starting-as-false.js';
+import '../test_components/test-descendant-component-with-language-prop-from-lang-in-ancestor.js';
+import '../test_components/test-descendant-component-with-multiple-usages-of-the-mixin.js';
+suite('plain-html-element-inside-web-component-container-ancestor', function () {
+    let ancestor;
+    let descendant;
+    setup(function () {
+        ancestor = fixture('plain-html-element-ancestor-inside-web-component-container');
+        descendant = ancestor.querySelector('test-descendant-component');
+    });
 
-            test('each descendant receives value of its ancestor', function () {
+    test('descendant receives initial value of plain html element ancestor', function () {
+        expect(descendant.myProp1).to.be.equal("initialValue");
+    });
+});
+</script>est('each descendant receives value of its ancestor', function () {
                 ancestor1.myProp1 = 'valueForDescendant1';
                 expect(descendant1.myProp1).to.be.equal("valueForDescendant1");
                 ancestor2.myProp1 = 'valueForDescendant2';
@@ -419,29 +516,37 @@
     </test-fixture>
     <script>
         suite('memory-cleanup-on-detach-with-multiple-usages-of-the-mixin', function () {
-            let ancestor;
-            let descendant;
-            setup(function () {
-                ancestor = fixture('memory-cleanup-on-detach-with-multiple-usages-of-the-mixin');
-                descendant = ancestor.querySelector('test-descendant-component-with-multiple-usages-of-the-mixin');
-            });
+    <script type="module">
+import '../test_components/test-ancestor-component-as-container.js';
+import '../test_components/test-ancestor-component-with-own-template.js';
+import '../test_components/test-descendant-component.js';
+import '../test_components/test-descendant-component-legacy-requiring-polymer-constructor.js';
+import '../test_components/test-descendant-component-with-default.js';
+import '../test_components/test-descendant-component-with-custom-prop-declaration.js';
+import '../test_components/test-descendant-component-disablable-from-fieldset-starting-as-false.js';
+import '../test_components/test-descendant-component-with-language-prop-from-lang-in-ancestor.js';
+import '../test_components/test-descendant-component-with-multiple-usages-of-the-mixin.js';
+suite('two-instances-of-same-descendant-in-containers-with-different-properties', function () {
+    let ancestor1;
+    let ancestor2;
+    let descendant1;
+    let descendant2;
+    setup(function () {
+        let template = fixture('two-instances-of-same-descendant-in-containers-with-different-properties');
+        ancestor1 = template.querySelector('#ancestor1');
+        ancestor2 = template.querySelector('#ancestor2');
+        descendant1 = ancestor1.querySelector('test-descendant-component');
+        descendant2 = ancestor2.querySelector('test-descendant-component');
+    });
 
-            test('each usages observer gets disconnected', function () {
-                let disconnectFired = false;
-
-                var observers = descendant.__propertiesFromAncestorBehavior.observers;
-
-                let observersLength = observers.length;
-                let observersDisconnectCalls = 0;
-
-                expect(observersLength).to.not.be.equal(0);
-
-                for (let i = 0; i < observersLength; i++) {
-                    let observer = observers[i];
-                    let originalDisconnect = observer.disconnect;
-                    observer.disconnect = function () {
-                        originalDisconnect.apply(this, arguments);
-                        ++observersDisconnectCalls;
+    test('each descendant receives value of its ancestor', function () {
+        ancestor1.myProp1 = 'valueForDescendant1';
+        expect(descendant1.myProp1).to.be.equal("valueForDescendant1");
+        ancestor2.myProp1 = 'valueForDescendant2';
+        expect(descendant2.myProp1).to.be.equal("valueForDescendant2");
+    });
+});
+</script>           ++observersDisconnectCalls;
                     };
                 }
                 ancestor.parentNode.removeChild(ancestor);
@@ -452,4 +557,46 @@
         });
     </script>
 </body>
-</html>
+</ht<script type="module">
+import '../test_components/test-ancestor-component-as-container.js';
+import '../test_components/test-ancestor-component-with-own-template.js';
+import '../test_components/test-descendant-component.js';
+import '../test_components/test-descendant-component-legacy-requiring-polymer-constructor.js';
+import '../test_components/test-descendant-component-with-default.js';
+import '../test_components/test-descendant-component-with-custom-prop-declaration.js';
+import '../test_components/test-descendant-component-disablable-from-fieldset-starting-as-false.js';
+import '../test_components/test-descendant-component-with-language-prop-from-lang-in-ancestor.js';
+import '../test_components/test-descendant-component-with-multiple-usages-of-the-mixin.js';
+suite('memory-cleanup-on-detach-with-multiple-usages-of-the-mixin', function () {
+    let ancestor;
+    let descendant;
+    setup(function () {
+        ancestor = fixture('memory-cleanup-on-detach-with-multiple-usages-of-the-mixin');
+        descendant = ancestor.querySelector('test-descendant-component-with-multiple-usages-of-the-mixin');
+    });
+
+    test('each usages observer gets disconnected', function () {
+        let disconnectFired = false;
+
+        var observers = descendant.__propertiesFromAncestorBehavior.observers;
+
+        let observersLength = observers.length;
+        let observersDisconnectCalls = 0;
+
+        expect(observersLength).to.not.be.equal(0);
+
+        for (let i = 0; i < observersLength; i++) {
+            let observer = observers[i];
+            let originalDisconnect = observer.disconnect;
+            observer.disconnect = function () {
+                originalDisconnect.apply(this, arguments);
+                ++observersDisconnectCalls;
+            };
+        }
+        ancestor.parentNode.removeChild(ancestor);
+
+        expect(observersDisconnectCalls).to.be.equal(observersLength);
+        expect(observers).to.be.empty;
+    });
+});
+</script>

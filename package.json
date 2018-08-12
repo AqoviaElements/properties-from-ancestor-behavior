@@ -1,11 +1,43 @@
 {
-  "dependencies": {},
+  "description": "Polymer mixin (behavior) for a web component to take a property value from the closest ancestor that has it.",
+  "keywords": [
+    "html-elements",
+    "polymer",
+    "polymer-elements",
+    "web-components",
+    "ancestor",
+    "property",
+    "closest"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AqoviaElements/properties-from-ancestor-behavior.git"
+  },
+  "homepage": "https://github.com/AqoviaElements/properties-from-ancestor-behavior",
+  "dependencies": {
+    "@polymer/polymer": "^3.0.0"
+  },
   "devDependencies": {
     "bower": "^1.8.4",
     "polylint": "^2.10.4",
-    "web-component-tester": "^6.7.1"
+    "web-component-tester": "^6.7.1",
+    "@polymer/iron-component-page": "^3.0.0-pre.18",
+    "@polymer/iron-demo-helpers": "^3.0.0-pre.18",
+    "wct-browser-legacy": "^1.0.1",
+    "@webcomponents/webcomponentsjs": "^2.0.0"
   },
   "scripts": {
     "test": "polylint && wct"
-  }
+  },
+  "name": "properties-from-ancestor-behavior",
+  "version": "3.0.0",
+  "resolutions": {
+    "inherits": "2.0.3",
+    "samsam": "1.1.3",
+    "supports-color": "3.1.2",
+    "type-detect": "1.0.0"
+  },
+  "main": "properties-from-ancestor-behavior.js",
+  "author": "Aqovia",
+  "license": "BSD-3-Clause"
 }
