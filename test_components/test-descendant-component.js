@@ -1,10 +1,11 @@
 import '@polymer/polymer/polymer-legacy.js';
 import '../properties-from-ancestor-behavior.js';
-import './test-descendant-components-mixin-with-prop.js';
-import './test-descendant-components-behavior-with-prop-as-legacy-hybrid.js';
+import { TestDescendantComponentsMixinWithProp } from './test-descendant-components-mixin-with-prop.js';
+import { TestDescendantComponentsBehaviorWithPropAsLegacyHybrid } from './test-descendant-components-behavior-with-prop-as-legacy-hybrid.js';
 import { html } from '@polymer/polymer/lib/utils/html-tag.js';
 import { mixinBehaviors } from '@polymer/polymer/lib/legacy/class.js';
 import { PolymerElement } from '@polymer/polymer/polymer-element.js';
+import { PropertiesFromAncestorBehavior } from '../properties-from-ancestor-behavior.js';
 class TestDescendantComponent extends TestDescendantComponentsMixinWithProp(mixinBehaviors([
     PropertiesFromAncestorBehavior({
         myProp1: {},

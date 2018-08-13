@@ -1,4 +1,4 @@
-TestDescendantComponentsMixinWithProp = function (superClass) {
+export const TestDescendantComponentsMixinWithProp = function (superClass) {
     return class extends superClass {
         static get properties() {
             return {

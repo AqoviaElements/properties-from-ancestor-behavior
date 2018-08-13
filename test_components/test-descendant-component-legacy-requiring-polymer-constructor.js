@@ -1,8 +1,9 @@
 import '@polymer/polymer/polymer-legacy.js';
 import '../properties-from-ancestor-behavior.js';
-import './test-descendant-components-behavior-with-prop-as-legacy-hybrid.js';
+import { TestDescendantComponentsBehaviorWithPropAsLegacyHybrid  } from './test-descendant-components-behavior-with-prop-as-legacy-hybrid.js';
 import { Polymer } from '@polymer/polymer/lib/legacy/polymer-fn.js';
 import { html } from '@polymer/polymer/lib/utils/html-tag.js';
+import { PropertiesFromAncestorBehavior } from '../properties-from-ancestor-behavior.js';
 Polymer({
   _template: html`
         <h1>Descendant component</h1>

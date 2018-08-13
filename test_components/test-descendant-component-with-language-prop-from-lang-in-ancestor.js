@@ -3,6 +3,7 @@ import '../properties-from-ancestor-behavior.js';
 import { html } from '@polymer/polymer/lib/utils/html-tag.js';
 import { mixinBehaviors } from '@polymer/polymer/lib/legacy/class.js';
 import { PolymerElement } from '@polymer/polymer/polymer-element.js';
+import { PropertiesFromAncestorBehavior } from '../properties-from-ancestor-behavior.js';
 class TestDescendantComponentWithLanguagePropFromLangInAncestor extends mixinBehaviors([
     PropertiesFromAncestorBehavior({
         language: {

@@ -147,7 +147,7 @@ handleTap() {
 @polymerBehavior
 @demo demo/index.html
 */
-PropertiesFromAncestorBehavior = function (propsDefObject) {
+export const PropertiesFromAncestorBehavior = function (propsDefObject) {
     'use strict';
     return Object.keys(propsDefObject).map(function (propName) {
             let propDef = propsDefObject[propName];
