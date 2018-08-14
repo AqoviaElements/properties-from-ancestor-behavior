@@ -9,10 +9,16 @@ A <a href="https://www.polymer-project.org" target="_blank">Polymer</a> Behavior
 It can be useful for ubiquitous properties (think [language of the UI](#html-lang), currency, [`disabled` state to every input of a form](#how-to-native-like-support-for-fieldset-disabled), etc.) which would otherwise pollute attributes of every component with same boilerplate expression, or force usage of a global variable (usually without binding to changes).  
 An extra feature of [being able to observe attributes](#ancestorObservedItem) helps with achieving easy-to-use web components, reusable in other app frameworks or pure HTML.
 
+### Installation:
+```
+npm install --save github:AqoviaElements/properties-from-ancestor-behavior#semver:^3.0
+```
+
 ### Usage:
 
 Technically, it's a behavior factory function. To have a behavior instance created, you call the `PropertiesFromAncestorBehavior()`.
 ```JavaScript
+import { PropertiesFromAncestorBehavior } from 'properties-from-ancestor-behavior/properties-from-ancestor-behavior.js';
 class MyComponent extends Polymer.mixinBehaviors([
 PropertiesFromAncestorBehavior({
         // Just declaring a property here is enough to make it work.
