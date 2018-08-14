@@ -27,8 +27,8 @@
   },
   "scripts": {
     "test": "polymer lint && polymer test",
-    "test-in-browser-interactively": "polymer serve --open --open-path components/properties-from-ancestor-behavior/test",
-    "test-in-browser-chrome-only": "polymer test -l chrome",
+    "test-interactively-in-browser": "polymer serve --open --open-path components/properties-from-ancestor-behavior/test",
+    "test-once-in-browser-chrome-only": "polymer test -l chrome",
     "component-info-page-build-serve-and-open": "polymer analyze -i properties-from-ancestor-behavior.js > analysis.json && polymer serve --open",
     "build": "NOCOMMIT - test && https://www.polymer-project.org/3.0/docs/tools/polymer-cli-commands"
   },
